@@ -1,3 +1,7 @@
+
+lihat prototype: https://invis.io/UYRAZ2NVR5W
+sql            : attandance.sql
+____________________________________________________________________________________________________
 # E-Ujian
 ## Deskripsi
 E-Ujian merupakan platform ujian untuk institusi pendidikan. E-Ujian memudahkan pengajar untuk membuat dan
