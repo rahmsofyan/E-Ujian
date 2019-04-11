@@ -11,12 +11,22 @@
 
 <body>
     <section class='welcome'>
-        <div class='plane bright_bleft' style="position:absolute; left:2.5vw; width:25vw; height:120px;">
-            <a></a>
+
+        <div class='plane bright_bleft oa' style="
+            position:absolute; 
+            left:2.5vw; 
+            --total:calc(30vw+15vh);
+            width:calc(var(--total)-15vh); 
+            height:calc(var(--total)-30vw);
+            ">
+            <img class="logo" src="img/logo1.png">
+            <img class="logo" src="img/logo2.png">
+            <img class="logo" src="img/logo3.png">
         </div>    
-        <div class='plane tright_bright'>
-            
-            </div>    
+        <div class='plane bleft' style="float: right;">
+        <button class="" style="text-align:center;">Login</button>
+        <button class="" style="text-align:center;">Register</button>
+        </div>    
         </div>
     </section>
 </body>
