@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\soalEujian;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class SoalEujianController extends Controller
 {
@@ -12,9 +13,10 @@ class SoalEujianController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        //$request->session()->flush();
+        dd($request->session()->all());
     }
 
     /**
@@ -35,7 +37,18 @@ class SoalEujianController extends Controller
      */
     public function store(Request $request)
     {
-        //
+     
+     
+     
+     $request->session()->put('soal.'.$request->namaSoal, 
+     $request->content);
+      
+     $data = $request->session()->get('soal');
+     
+     
+      $file = json_encode($data); 
+      Storage::put('filee.json', $file);
+      $url = Storage::url('fffile.json');
     }
 
     /**

@@ -12,11 +12,10 @@
 */
 
 Route::get('/', function () {
-    echo 'hallo';
-    return view('home');
+    return view('editor');
 });
 
 
 Auth::routes();
-
+Route::resource('soal','SoalEujianController');
 Route::get('/home', 'HomeController@index')->name('home');
