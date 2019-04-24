@@ -27,6 +27,7 @@ class CreateMahasiswaMengambilsTable extends Migration
                     ->on('matakuliahs')
                     ->onUpdate('cascade')
                     ->onDelete('cascade');
+            $table->string('status');
             $table->timestamps();
         });
     }

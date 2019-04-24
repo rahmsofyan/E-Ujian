@@ -23,6 +23,7 @@ class CreateMatakuliahsTable extends Migration
                 ->on('dosens')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
+                $table->string('status');
             $table->timestamps();
         });
     }
