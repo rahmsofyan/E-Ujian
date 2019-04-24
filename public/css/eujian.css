@@ -1,9 +1,5 @@
 body
 {
-   margin: 0 0 0 0;
-}
-.welcome
-{
     background: 
     linear-gradient(
         180deg,
@@ -14,13 +10,23 @@ body
     width:auto;
     height:100vh;
     background-size:cover;
+    background-position: center;
+
+}
+
+.welcome
+{
+    position:absolute; 
+    left:2.5vw; 
+    top:0;
+    --total:calc(30vw+15vh);
+    width:calc(var(--total)-15vh); 
+    height:calc(var(--total)-30vw);   
 }
 
 .plane
 {
- text   
-    height: 100vh;
-    width: 30vw;
+    
     background-color: #F9F9F9;
     box-shadow:5px 0px 10px  rgba(0, 0, 0, 0.5);
 }
@@ -49,3 +55,4 @@ body
     width:auto;
     height:8vh;
 }
+
