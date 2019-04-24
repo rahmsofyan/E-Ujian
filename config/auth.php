@@ -46,6 +46,16 @@ return [
             'provider' => 'users',
             'hash' => false,
         ],
+
+        'dosen' => [
+            'driver' => 'session',
+            'provider' => 'mahasiswas',
+        ],
+
+        'mahasiswa' => [
+            'driver' => 'session',
+            'provider' => 'dosens',
+        ],
     ],
 
     /*
@@ -69,6 +79,14 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => App\User::class,
+        ],
+        'dosens' => [
+            'driver' => 'eloquent',
+            'model' => App\dosen::class,
+        ],
+        'mahasiswa' => [
+            'driver' => 'eloquent',
+            'model' => App\mahasiswa::class,
         ],
 
         // 'users' => [
