@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 25 Apr 2019 pada 06.36
+-- Waktu pembuatan: 25 Apr 2019 pada 07.09
 -- Versi server: 10.1.34-MariaDB
 -- Versi PHP: 7.2.8
 
@@ -29,7 +29,7 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `oe_admin` (
-  `id` int(11) NOT NULL,
+  `admin_id` int(11) NOT NULL,
   `loginid` varchar(50) NOT NULL,
   `pass` varchar(50) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
@@ -62,6 +62,22 @@ CREATE TABLE `oe_result` (
   `test_id` int(5) DEFAULT NULL,
   `test_date` date DEFAULT NULL,
   `score` int(3) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `oe_session`
+--
+
+CREATE TABLE `oe_session` (
+  `session_id` int(11) NOT NULL,
+  `sub_id` int(11) NOT NULL,
+  `admin_id` int(11) DEFAULT NULL,
+  `room` varchar(50) DEFAULT NULL,
+  `time_start` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `time_end` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `jumlah_peserta` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -126,7 +142,7 @@ CREATE TABLE `oe_useranswer` (
 -- Indeks untuk tabel `oe_admin`
 --
 ALTER TABLE `oe_admin`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`admin_id`);
 
 --
 -- Indeks untuk tabel `oe_question`
@@ -160,7 +176,7 @@ ALTER TABLE `oe_user`
 -- AUTO_INCREMENT untuk tabel `oe_admin`
 --
 ALTER TABLE `oe_admin`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `admin_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT untuk tabel `oe_question`
