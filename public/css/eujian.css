@@ -1,0 +1,58 @@
+body
+{
+    background: 
+    linear-gradient(
+        180deg,
+         rgba(1,149,119,0.77) 0%,
+         rgba(1,29,62,0.77) 100%
+      ),
+    url('img/home.jpg');
+    width:auto;
+    height:100vh;
+    background-size:cover;
+    background-position: center;
+
+}
+
+.welcome
+{
+    position:absolute; 
+    left:2.5vw; 
+    top:0;
+    --total:calc(30vw+15vh);
+    width:calc(var(--total)-15vh); 
+    height:calc(var(--total)-30vw);   
+}
+
+.plane
+{
+    
+    background-color: #F9F9F9;
+    box-shadow:5px 0px 10px  rgba(0, 0, 0, 0.5);
+}
+
+.bright
+{
+    border-radius: 0px 0px 3vw 0px;
+    
+}
+.bleft 
+{
+    border-radius: 0px 0px 0px 3vw;
+}
+
+.bright_bleft
+{
+    border-radius: 0px 0px 3vw 3vw;
+}
+
+.logo
+{
+    margin-top:1.5vh;
+    margin-bottom:1.5vh;
+    margin-left:1vw;
+    margin-right:1vw;
+    width:auto;
+    height:8vh;
+}
+
