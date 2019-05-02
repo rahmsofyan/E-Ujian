@@ -54,7 +54,7 @@ class AgendaController extends Controller
         $yuhu = 7 * $i;
         // dd($request->tanggal); "2019-01-29"
         $array = [
-            "idAgenda" => $request->idAgenda,
+            "fk_idAgenda" => $request->idAgenda,
             "tglPertemuan" => date('Y-m-d', strtotime($request->tanggal. ' + '.$yuhu.' days')),
             "waktuMulai" => $request->WaktuMulai,
             "waktuSelesai" => $request->WaktuSelesai,

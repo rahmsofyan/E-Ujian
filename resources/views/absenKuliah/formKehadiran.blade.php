@@ -11,7 +11,7 @@
             </tr> 
           </thead>
          <tbody>
-         @foreach($wkwks as $key => $wk)
+         @foreach($kehadiran as $key => $wk)
          <tr>
            <td> {{ $key+1}}</td>
            <td> {{ $wk->idUser}}</td>

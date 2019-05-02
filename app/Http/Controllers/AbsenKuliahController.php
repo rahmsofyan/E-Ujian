@@ -124,18 +124,20 @@ class AbsenKuliahController extends Controller
         // $wkwks = DB::select('select * from kehadiran INNER JOIN users ON kehadiran.idUser = users.idUser where kehadiran.idAgenda = ?;', array($idAgenda));
         DB::statement('call Cek()');
 
-        $wkwks = DB::table('kehadiran')
-                    ->join('users', 'kehadiran.idUser', '=', 'users.idUser')
-                    ->leftjoin('pic', 'kehadiran.idUser', '=', 'pic.idPIC')
-                    ->select('kehadiran.*', 'users.name')
-                    ->where('kehadiran.idAgenda', '=', $idAgenda)
+        $kehadiran = DB::table('kehadiranv2')
+                    ->join('users', 'kehadiranv2.idUser', '=', 'users.idUser')
+                    ->leftjoin('pic', 'kehadiranv2.idUser', '=', 'pic.idPIC')
+                    ->select('kehadiranv2.*', 'users.name',)
+                    ->where('kehadiranv2.idAgenda', '=', $idAgenda)
                     ->get();
+//        dd($kehadiran);
 
         $dosen = DB::table('agenda')
                     ->join('pic', 'agenda.fk_idPIC', '=', 'pic.idPIC')
-                    ->select('pic.namaPIC', 'agenda.namaAgenda')
+                    ->select('pic.namaPIC', 'agenda.namaAgenda','agenda.WaktuMulai')
                     ->where('agenda.idAgenda', '=', $idAgenda)
-                    ->get();
+                    ->get()->first();
+        //dd($dosen);
 
         $tanggals = DB::table('absenKuliah')
                     ->select('tglPertemuan')
@@ -144,6 +146,6 @@ class AbsenKuliahController extends Controller
                     ->get();
 
         // $wkwks = DB::select('exec GetData(?)',array($idAgenda));
-        return view('absenKuliah.tampilKehadiran', compact('wkwks', 'dosen', 'tanggals'));
+        return view('absenKuliah.tampilKehadiran', compact('kehadiran', 'dosen', 'tanggals'));
     }
 }

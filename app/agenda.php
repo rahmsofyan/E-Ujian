@@ -10,7 +10,7 @@ class agenda extends Model
         protected $table = 'agenda';
         protected $primaryKey = 'idAgenda';
         public $incrementing = false;
-        protected $fillable = [ 'idAgenda','namaAgenda','tanggal','hari','fk_idRuang','WaktuMulai','WaktuSelesai','fk_idPIC','notule'];
+        protected $fillable = [ 'idAgenda','namaAgenda','singkatAgenda','tanggal','hari','fk_idRuang','WaktuMulai','WaktuSelesai','fk_idPIC','notule'];
 
         public function ruang()
         {

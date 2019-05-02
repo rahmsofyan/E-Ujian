@@ -11,7 +11,7 @@
        <div class="col-lg-12">
           <h1 class="page-header text-center">
             Data Presensi <br>
-            @foreach($dosen as $dosen)
+            
               {!! $dosen->namaAgenda !!}
           </h1>
           <hr class="col-md-12">
@@ -34,7 +34,7 @@
         <i class="fa fa-user fa-fw"></i>
         <b>
           {!! $dosen->namaPIC !!}
-          @endforeach
+          
         </b>
        </div>
 
@@ -75,28 +75,14 @@
             </tr> 
           </thead>
          <tbody>
-         @foreach($wkwks as $key => $wk)
+         @foreach($kehadiran as $key => $row)
          <tr>
            <td> {{ $key+1}}</td>
-           <td> {{ $wk->idUser}}</td>
-           <td colspan="3"> {{ $wk->name }}</td>
-           <td> {!! ($wk->p1 == 1)? '<i class="fa fa-check" style="color: #00FF00"></i>' :(($wk->p1 == 2)?'<i class="fa fa-check" style="color: red"></i>' : (($wk->p1 == 3)?'<i class="fa fa-info"></i>': '-')) !!} </td>
-           <td> {!! ($wk->p2 == 1)? '<i class="fa fa-check" style="color: #00FF00"></i>' :(($wk->p2 == 2)?'<i class="fa fa-check" style="color: red"></i>' : (($wk->p2 == 3)?'<i class="fa fa-info"></i>': '-')) !!} </td>
-           <td> {!! ($wk->p3 == 1)? '<i class="fa fa-check" style="color: #00FF00"></i>' :(($wk->p3 == 2)?'<i class="fa fa-check" style="color: red"></i>' : (($wk->p3 == 3)?'<i class="fa fa-info"></i>': '-')) !!} </td>
-           <td> {!! ($wk->p4 == 1)? '<i class="fa fa-check" style="color: #00FF00"></i>' :(($wk->p4 == 2)?'<i class="fa fa-check" style="color: red"></i>' : (($wk->p4 == 3)?'<i class="fa fa-info"></i>': '-')) !!} </td>
-           <td> {!! ($wk->p5 == 1)? '<i class="fa fa-check" style="color: #00FF00"></i>' :(($wk->p5 == 2)?'<i class="fa fa-check" style="color: red"></i>' : (($wk->p5 == 3)?'<i class="fa fa-info"></i>': '-')) !!} </td>
-           <td> {!! ($wk->p6 == 1)? '<i class="fa fa-check" style="color: #00FF00"></i>' :(($wk->p6 == 2)?'<i class="fa fa-check" style="color: red"></i>' : (($wk->p6 == 3)?'<i class="fa fa-info"></i>': '-')) !!} </td>
-           <td> {!! ($wk->p7 == 1)? '<i class="fa fa-check" style="color: #00FF00"></i>' :(($wk->p7 == 2)?'<i class="fa fa-check" style="color: red"></i>' : (($wk->p7 == 3)?'<i class="fa fa-info"></i>': '-')) !!} </td>
-           <td> {!! ($wk->p8 == 1)? '<i class="fa fa-check" style="color: #00FF00"></i>' :(($wk->p8 == 2)?'<i class="fa fa-check" style="color: red"></i>' : (($wk->p8 == 3)?'<i class="fa fa-info"></i>': '-')) !!} </td>
-           <td> {!! ($wk->p9 == 1)? '<i class="fa fa-check" style="color: #00FF00"></i>' :(($wk->p9 == 2)?'<i class="fa fa-check" style="color: red"></i>' : (($wk->p9 == 3)?'<i class="fa fa-info"></i>': '-')) !!} </td>
-           <td> {!! ($wk->p10 == 1)? '<i class="fa fa-check" style="color: #00FF00"></i>' :(($wk->p10 == 2)?'<i class="fa fa-check" style="color: red"></i>' : (($wk->p10 == 3)?'<i class="fa fa-info"></i>': '-')) !!} </td>
-           <td> {!! ($wk->p11 == 1)? '<i class="fa fa-check" style="color: #00FF00"></i>' :(($wk->p11 == 2)?'<i class="fa fa-check" style="color: red"></i>' : (($wk->p11 == 3)?'<i class="fa fa-info"></i>': '-')) !!} </td>
-           <td> {!! ($wk->p12 == 1)? '<i class="fa fa-check" style="color: #00FF00"></i>' :(($wk->p12 == 2)?'<i class="fa fa-check" style="color: red"></i>' : (($wk->p12 == 3)?'<i class="fa fa-info"></i>': '-')) !!} </td>
-           <td> {!! ($wk->p13 == 1)? '<i class="fa fa-check" style="color: #00FF00"></i>' :(($wk->p13 == 2)?'<i class="fa fa-check" style="color: red"></i>' : (($wk->p13 == 3)?'<i class="fa fa-info"></i>': '-')) !!} </td>
-           <td> {!! ($wk->p14 == 1)? '<i class="fa fa-check" style="color: #00FF00"></i>' :(($wk->p14 == 2)?'<i class="fa fa-check" style="color: red"></i>' : (($wk->p14 == 3)?'<i class="fa fa-info"></i>': '-')) !!} </td>
-           <td> {!! ($wk->p15 == 1)? '<i class="fa fa-check" style="color: #00FF00"></i>' :(($wk->p15 == 2)?'<i class="fa fa-check" style="color: red"></i>' : (($wk->p15 == 3)?'<i class="fa fa-info"></i>': '-')) !!} </td>
-           <td> {!! ($wk->p16 == 1)? '<i class="fa fa-check" style="color: #00FF00"></i>' :(($wk->p16 == 2)?'<i class="fa fa-check" style="color: red"></i>' : (($wk->p16 == 3)?'<i class="fa fa-info"></i>': '-')) !!} </td>
-           <td> {!! ($wk->p17 == 1)? '<i class="fa fa-check" style="color: #00FF00"></i>' :(($wk->p17 == 2)?'<i class="fa fa-check" style="color: red"></i>' : (($wk->p17 == 3)?'<i class="fa fa-info"></i>': '-')) !!} </td>
+           <td> {{ $row->idUser}}</td>
+           <td colspan="3"> {{ $row->name }}</td>
+            
+           <td> {!! ($row->p1 != null && (strtotime($row->p1) - strtotime($dosen->WaktuMulai)) / 3600<=10)? '<span class="btn btn-primary">On Time</span>' :(($row->p1 =='izin')?'<span class="btn btn-warning">Izin</span>' : (($row->p1 == null)?'<span class="btn btn-danger">Danger</span>': '-')) !!} </td>
+           
          </tr>
          @endforeach
         </tbody>

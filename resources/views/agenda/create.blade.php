@@ -35,6 +35,13 @@
        </div>
 
        <div class="form-group">
+        <label class="control-label col-sm-2">Singkatan Agenda</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="singkatAgenda" placeholder="Masukan Singkatan Agenda" name="singkatAgenda">
+        </div>
+     </div>
+
+       <div class="form-group">
           <label class="control-label col-sm-2">tanggal</label>
           <div class="col-sm-10">
             <input type="date" class="form-control" id="tanggal" placeholder="Masukan tanggal" name="tanggal">
