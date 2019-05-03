@@ -1,3 +1,4 @@
+<?php use \App\Http\Controllers\AbsenKuliahController;?>
 @extends('layouts.main')
 
 @section('title')
@@ -75,17 +76,93 @@
             </tr> 
           </thead>
          <tbody>
+          <?php $total=[]; 
+           for($i=1;$i<=17;$i++)
+            {
+              $total['p'.$i]['izin'] =0;
+              $total['p'.$i]['alpha'] =0;
+              $total['p'.$i]['ontime'] =0;
+              $total['p'.$i]['late'] =0;
+              $total['p'.$i]['intolerance'] =0;
+              $total['p'.$i]['special'] =0;
+            }
+            
+                ?>
          @foreach($kehadiran as $key => $row)
+         
          <tr>
            <td> {{ $key+1}}</td>
            <td> {{ $row->idUser}}</td>
            <td colspan="3"> {{ $row->name }}</td>
+           
+           <?php 
+           
+            $result = AbsenKuliahController::filterhadir($row,$dosen->WaktuMulai,17,10);
             
-           <td> {!! ($row->p1 != null && (strtotime($row->p1) - strtotime($dosen->WaktuMulai)) / 3600<=10)? '<span class="btn btn-primary">On Time</span>' :(($row->p1 =='izin')?'<span class="btn btn-warning">Izin</span>' : (($row->p1 == null)?'<span class="btn btn-danger">Danger</span>': '-')) !!} </td>
+            for($index=1;$index<=17;$index++){
+            if(isset($result['p'.$index]['izin'])) $total['p'.$index]['izin']+=1;
+            if(isset($result['p'.$index]['alpha'])) $total['p'.$index]['alpha']+=1;
+            if(isset($result['p'.$index]['ontime']))$total['p'.$index]['ontime']+=1;
+            if(isset($result['p'.$index]['late']))$total['p'.$index]['late'] +=1 ;
+            if(isset($result['p'.$index]['special']))$total['p'.$index]['special'] += 1;
+            if(isset($result['p'.$index]['intolerance']))$total['p'.$index]['intolerance'] +=1;
+            }
+           ?>
+           
            
          </tr>
          @endforeach
+         
         </tbody>
+        <tr>
+          <td colspan="20"></td>
+        </tr>
+        <tr> 
+            <td>#</td>
+            <td colspan="4">
+                Masuk
+            </td>
+            <td colspan='17'></td>
+          </tr> 
+          <tr> <td></td><td></td>
+              <td colspan="3">Tepat Waktu</td>
+              <?php for($i=1;$i<=17;$i++)echo "<td>".$total['p'.$i]['ontime']."</td>"?>;
+           </tr>
+            <tr> <td></td><td></td>
+              <td colspan="3">Dengan Toleransi</td>
+              <?php for($i=1;$i<=17;$i++)echo "<td>".$total['p'.$i]['intolerance']."</td>"?>;
+            </tr>
+            <tr> <td></td><td></td>
+               <td colspan="3">Terlambat</td>
+               <?php for($i=1;$i<=17;$i++)echo "<td>".$total['p'.$i]['late']."</td>"?>;
+             </tr>
+              <tr> <td></td><td></td>
+                <td colspan="3">Total</td>
+                <?php for($i=1;$i<=17;$i++)echo "<td>".($total['p'.$i]['late']+$total['p'.$i]['ontime']+$total['p'.$i]['intolerance'])."</td>"?>;
+             </tr>
+             <tr> 
+              <td>#</td>
+              <td colspan="4">
+                  Tidak Masuk
+              </td>
+              <td colspan='17'></td>
+            </tr> 
+            <tr> <td></td><td></td>
+                <td colspan="3">Izin</td>
+                <?php for($i=1;$i<=17;$i++)echo "<td>".$total['p'.$i]['izin']."</td>"?>;
+             </tr>
+              <tr> <td></td><td></td>
+                <td colspan="3">Alpha</td>
+                <?php for($i=1;$i<=17;$i++)echo "<td>".$total['p'.$i]['alpha']."</td>"?>;
+              </tr>
+              <tr> <td></td><td></td>
+                 <td colspan="3">Libur</td>
+                 <?php for($i=1;$i<=17;$i++)echo "<td>".$total['p'.$i]['special']."</td>"?>;
+               </tr>
+                <tr> <td></td><td></td>
+                  <td colspan="3">Total</td>
+                  <?php for($i=1;$i<=17;$i++)echo "<td>".($total['p'.$i]['alpha']+$total['p'.$i]['izin']+$total['p'.$i]['special'])."</td>"?>;
+               </tr>
         </table>
               <div id="modal-interval" class="modal inmodal fade" id="detailku" tabindex="-1" role="dialog"  aria-hidden="true">
                   <div class="modal-dialog modal-dialog-centered">

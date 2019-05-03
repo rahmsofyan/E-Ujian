@@ -11,6 +11,8 @@ use App\Http\Controllers\Controller;
 
 class AbsenKuliahController extends Controller
 {
+    
+
     public function __construct()
     {
         $this->middleware('auth');
@@ -146,6 +148,50 @@ class AbsenKuliahController extends Controller
                     ->get();
 
         // $wkwks = DB::select('exec GetData(?)',array($idAgenda));
+        
         return view('absenKuliah.tampilKehadiran', compact('kehadiran', 'dosen', 'tanggals'));
     }
+
+    public static function filterhadir($arraydata,$masuk,$until,$tolerance) {
+        $index = 1;
+        $result = [];
+        foreach ($arraydata as $key => $row) {
+            if($key != 'p'.$index || $index>$until)continue;
+            echo '<td ';
+            if ($row =='izin') {
+                echo 'class="alert btn-primary"';
+                $result['p'.$index]['izin']=1;
+            }
+            elseif ($row == null) {
+                echo 'class="alert btn-danger"';
+                $result['p'.$index]['alpha']=1;
+            }
+            elseif((strtotime($row) - strtotime($masuk)) / 60 <= 0)
+            {
+                echo "class='alert' style='background-color:rgb(0,200,0);'";
+                $result['p'.$index]['ontime']=1;
+            }
+            elseif((strtotime($row) - strtotime($masuk)) / 60 >= 0  && (strtotime($row) - strtotime($masuk)) / 60 < $tolerance)
+            {
+                
+                $perminutes = 255/$tolerance;
+                $color = (strtotime($row) - strtotime($masuk)) / 60 * $perminutes;
+                echo "class='alert' style='background-color:rgb($color,200,0);'";
+                $result['p'.$index]['intolerance']=1;
+            }
+            elseif((strtotime($row) - strtotime($masuk)) / 60 > $tolerance)
+            {
+                echo "class='alert' style='background-color:rgb(255,200,0);'";
+                $result['p'.$index]['late']=1;
+            }
+            else{
+                echo 'class="alert btn-light"';
+                $result['p'.$index]['special']=1;
+            }
+            echo '></td>';
+            $index +=1;
+        }
+        return $result;
+    }
+
 }
