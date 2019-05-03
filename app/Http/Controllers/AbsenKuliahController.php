@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\absenKuliah;
+use App\kehadiran;
 use App\agenda;
 use Illuminate\Http\Request;
 use PDF;
@@ -12,7 +13,7 @@ use App\Http\Controllers\Controller;
 class AbsenKuliahController extends Controller
 {
     
-
+    var $k;
     public function __construct()
     {
         $this->middleware('auth');
@@ -136,7 +137,7 @@ class AbsenKuliahController extends Controller
 
         $dosen = DB::table('agenda')
                     ->join('pic', 'agenda.fk_idPIC', '=', 'pic.idPIC')
-                    ->select('pic.namaPIC', 'agenda.namaAgenda','agenda.WaktuMulai')
+                    ->select('pic.namaPIC', 'agenda.namaAgenda','agenda.WaktuMulai','agenda.idAgenda','agenda.toleransiKeterlambatan')
                     ->where('agenda.idAgenda', '=', $idAgenda)
                     ->get()->first();
         //dd($dosen);
@@ -149,7 +150,24 @@ class AbsenKuliahController extends Controller
 
         // $wkwks = DB::select('exec GetData(?)',array($idAgenda));
         
-        return view('absenKuliah.tampilKehadiran', compact('kehadiran', 'dosen', 'tanggals'));
+        $statusKehadiran = ['izin','alpha'];
+        return view('absenKuliah.tampilKehadiran', compact('kehadiran', 'dosen', 'tanggals','statusKehadiran'));
+    }
+    
+
+    public function UpdateStatusKehadiran(Request $request)
+    {
+        kehadiran::where('idUser',$request->nrp)
+                ->where('idAgenda',$request->idAgenda)
+                    ->update([$request->p => $request->status]);
+        return redirect()->back();
+    }
+
+    public function UpdateToleransiKehadiran(Request $request)
+    {
+        $tes = agenda::where('idAgenda',$request->idAgenda)
+                ->update(['toleransiKeterlambatan' => $request->toleransi]);
+        return redirect()->back();
     }
 
     public static function filterhadir($tanggal,$arraydata,$masuk,$until,$tolerance) {
@@ -169,7 +187,7 @@ class AbsenKuliahController extends Controller
                 echo 'class="alert btn-light"';
                 $result['p'.$index]['special']=1;
             }
-            elseif ($row == null) {
+            elseif ($row == null ||  $row=='alpha') {
                 echo 'class="alert btn-danger"';
                 $result['p'.$index]['alpha']=1;
             }

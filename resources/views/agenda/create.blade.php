@@ -56,6 +56,13 @@
        </div> 
 
        <div class="form-group">
+          <label class="control-label col-sm-2">Toleransi</label>
+          <div class="col-sm-10">
+            <input type="number" class="form-control" id="toleransi" placeholder="15" name="toleransiKeterlambatan">
+          </div>
+       </div> 
+
+       <div class="form-group">
           <label class="control-label col-sm-2">fk_idRuang</label>
           <div class="col-sm-10">
             <!-- <input type="text" class="form-control" id="fk_idRuang" placeholder="Masukan fk_idRuang" name="fk_idRuang"> -->
