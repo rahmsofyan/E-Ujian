@@ -24,7 +24,7 @@
       <div class="row">
         <a href="{{ route('absenKuliah') }}" class="btn btn-danger" style="margin: 0px 5px">Kembali</a>
         <div class="btn-btn-group">
-          <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modal-interval">Set Interval</button>
+          <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modal-interval">Toleransi Terlambat</button>
           <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-status">Opsi Status</button>
           <button form="A"  class="btn btn-primary" id="print"><li class="fa fa-print"></li>Print</button>
         </div>
@@ -41,129 +41,16 @@
 
        <div class="row" style="margin: 10px 0px;">
         <div>
-          <?php $no = 1; ?>
+          <?php $jmlPertemuan = 1; ?>
             @foreach($tanggals as $t)
-              <strong>@P{{$no++.' '}}:</strong> {{date('d-M-Y', strtotime($t->tglPertemuan))}}
+              <strong>@P{{$jmlPertemuan++.' '}} :</strong> {{date('d-M-Y', strtotime($t->tglPertemuan))}}
             @endforeach
         </div>
       </div>
 
         <div class="panel-body">
         <div class="table table-responsive">
-        <table class="table table-bordered table-striped" id="tableagen" style="width:100%">
-         <thead> 
-            <tr> 
-            <th>#</th>
-            <th>NRP</th>
-            <th colspan="3">Nama</th>
-            <th>p1</th>
-            <th>p2</th>
-            <th>p3</th>
-            <th>p4</th>
-            <th>p5</th>
-            <th>p6</th>
-            <th>p7</th>
-            <th>p8</th>
-            <th>p9</th>
-            <th>p10</th>
-            <th>p11</th>
-            <th>p12</th>
-            <th>p13</th>
-            <th>p14</th>
-            <th>p15</th>
-            <th>p16</th>
-            <th>p17</th>
-            </tr> 
-          </thead>
-         <tbody>
-          <?php $total=[]; 
-           for($i=1;$i<=17;$i++)
-            {
-              $total['p'.$i]['izin'] =0;
-              $total['p'.$i]['alpha'] =0;
-              $total['p'.$i]['ontime'] =0;
-              $total['p'.$i]['late'] =0;
-              $total['p'.$i]['intolerance'] =0;
-              $total['p'.$i]['special'] =0;
-            }
-            
-                ?>
-         @foreach($kehadiran as $key => $row)
-         
-         <tr>
-           <td> {{ $key+1}}</td>
-           <td> {{ $row->idUser}}</td>
-           <td colspan="3"> {{ $row->name }}</td>
-           
-           <?php 
-           
-            $result = AbsenKuliahController::filterhadir($row,$dosen->WaktuMulai,17,10);
-            
-            for($index=1;$index<=17;$index++){
-            if(isset($result['p'.$index]['izin'])) $total['p'.$index]['izin']+=1;
-            if(isset($result['p'.$index]['alpha'])) $total['p'.$index]['alpha']+=1;
-            if(isset($result['p'.$index]['ontime']))$total['p'.$index]['ontime']+=1;
-            if(isset($result['p'.$index]['late']))$total['p'.$index]['late'] +=1 ;
-            if(isset($result['p'.$index]['special']))$total['p'.$index]['special'] += 1;
-            if(isset($result['p'.$index]['intolerance']))$total['p'.$index]['intolerance'] +=1;
-            }
-           ?>
-           
-           
-         </tr>
-         @endforeach
-         
-        </tbody>
-        <tr>
-          <td colspan="20"></td>
-        </tr>
-        <tr> 
-            <td>#</td>
-            <td colspan="4">
-                Masuk
-            </td>
-            <td colspan='17'></td>
-          </tr> 
-          <tr> <td></td><td></td>
-              <td colspan="3">Tepat Waktu</td>
-              <?php for($i=1;$i<=17;$i++)echo "<td>".$total['p'.$i]['ontime']."</td>"?>;
-           </tr>
-            <tr> <td></td><td></td>
-              <td colspan="3">Dengan Toleransi</td>
-              <?php for($i=1;$i<=17;$i++)echo "<td>".$total['p'.$i]['intolerance']."</td>"?>;
-            </tr>
-            <tr> <td></td><td></td>
-               <td colspan="3">Terlambat</td>
-               <?php for($i=1;$i<=17;$i++)echo "<td>".$total['p'.$i]['late']."</td>"?>;
-             </tr>
-              <tr> <td></td><td></td>
-                <td colspan="3">Total</td>
-                <?php for($i=1;$i<=17;$i++)echo "<td>".($total['p'.$i]['late']+$total['p'.$i]['ontime']+$total['p'.$i]['intolerance'])."</td>"?>;
-             </tr>
-             <tr> 
-              <td>#</td>
-              <td colspan="4">
-                  Tidak Masuk
-              </td>
-              <td colspan='17'></td>
-            </tr> 
-            <tr> <td></td><td></td>
-                <td colspan="3">Izin</td>
-                <?php for($i=1;$i<=17;$i++)echo "<td>".$total['p'.$i]['izin']."</td>"?>;
-             </tr>
-              <tr> <td></td><td></td>
-                <td colspan="3">Alpha</td>
-                <?php for($i=1;$i<=17;$i++)echo "<td>".$total['p'.$i]['alpha']."</td>"?>;
-              </tr>
-              <tr> <td></td><td></td>
-                 <td colspan="3">Libur</td>
-                 <?php for($i=1;$i<=17;$i++)echo "<td>".$total['p'.$i]['special']."</td>"?>;
-               </tr>
-                <tr> <td></td><td></td>
-                  <td colspan="3">Total</td>
-                  <?php for($i=1;$i<=17;$i++)echo "<td>".($total['p'.$i]['alpha']+$total['p'.$i]['izin']+$total['p'.$i]['special'])."</td>"?>;
-               </tr>
-        </table>
+         @include('absenKuliah.tabelKehadiran')
               <div id="modal-interval" class="modal inmodal fade" id="detailku" tabindex="-1" role="dialog"  aria-hidden="true">
                   <div class="modal-dialog modal-dialog-centered">
                       <div class="modal-content">

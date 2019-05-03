@@ -152,15 +152,22 @@ class AbsenKuliahController extends Controller
         return view('absenKuliah.tampilKehadiran', compact('kehadiran', 'dosen', 'tanggals'));
     }
 
-    public static function filterhadir($arraydata,$masuk,$until,$tolerance) {
+    public static function filterhadir($tanggal,$arraydata,$masuk,$until,$tolerance) {
         $index = 1;
         $result = [];
         foreach ($arraydata as $key => $row) {
             if($key != 'p'.$index || $index>$until)continue;
             echo '<td ';
+
+            
             if ($row =='izin') {
                 echo 'class="alert btn-primary"';
                 $result['p'.$index]['izin']=1;
+                
+            }
+            elseif ($row==null && strtotime($tanggal[$index-1]->tglPertemuan) > strtotime(date('d-M-Y'))){
+                echo 'class="alert btn-light"';
+                $result['p'.$index]['special']=1;
             }
             elseif ($row == null) {
                 echo 'class="alert btn-danger"';
@@ -184,10 +191,8 @@ class AbsenKuliahController extends Controller
                 echo "class='alert' style='background-color:rgb(255,200,0);'";
                 $result['p'.$index]['late']=1;
             }
-            else{
-                echo 'class="alert btn-light"';
-                $result['p'.$index]['special']=1;
-            }
+            
+            
             echo '></td>';
             $index +=1;
         }
