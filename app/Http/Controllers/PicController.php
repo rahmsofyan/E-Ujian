@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\pic;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class PicController extends Controller
 {
@@ -32,8 +33,9 @@ class PicController extends Controller
      */
     public function create()
     {
-        //
-	return view('pic.create');
+     $idUser = \Auth::user()->idUser;
+     $nameUser = \Auth::user()->name;
+	 return view('pic.create',compact('idUser','nameUser'));
     }
 
     /**
@@ -42,6 +44,7 @@ class PicController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
     public function store(Request $request)
     {
         //
@@ -105,3 +108,4 @@ class PicController extends Controller
 
     }
 }
+

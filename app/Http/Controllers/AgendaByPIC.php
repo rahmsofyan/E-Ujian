@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Http\Controllers;
 
 use App\absenKuliah;
@@ -10,9 +11,8 @@ use PDF;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 
-class AbsenKuliahController extends Controller
+class agendabyPIC extends Controller
 {
-    
     var $k;
     public function __construct()
     {
@@ -24,12 +24,21 @@ class AbsenKuliahController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function agendabyPIC($idPIC)
+    {
+        if($idPIC!==null)
+        {
+            return $AllAgendaByPIC = agenda::where('fk_idPIC',$idPIC)->get();
+        }
+        else return [];
+    }
 
     public function index()
     {
+        //dd(\Auth::user()->PIC->idPIC);
         $a = DB::table('agenda')
-            ->join('pic', 'agenda.fk_idPIC', '=', 'pic.idPIC')
-            ->select('agenda.idAgenda', 'agenda.namaAgenda', 'pic.namaPIC')
+            ->where('agenda.fk_idPIC','=',\Auth::user()->PIC->idPIC)
+            ->select('agenda.idAgenda', 'agenda.namaAgenda',)
             ->get();
         
         return view('absenKuliah.listKehadiran',compact('a'));
@@ -218,5 +227,4 @@ class AbsenKuliahController extends Controller
         }
         return $result;
     }
-
 }

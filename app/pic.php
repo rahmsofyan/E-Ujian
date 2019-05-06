@@ -10,6 +10,6 @@ class pic extends Model
         protected $table = 'pic';
         protected $primaryKey = 'idPIC';
         public $incrementing = false;
-        protected $fillable = [ 'idPIC','namaPIC','keterangan'];
+        protected $fillable = [ 'idPIC','namaPIC','keterangan','idUser'];
 
 }

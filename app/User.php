@@ -9,12 +9,19 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class User extends Authenticatable
 {
     use Notifiable;
-
+    public $PIC ;
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
+
+
+    public function __construct()
+    {
+        $this->PIC = $this->getPIC();
+    }
+
     protected $fillable = [
         'idUser','name', 'email', 'password',
     ];
@@ -28,6 +35,8 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
     
-   
-
+    public function getPIC()
+    {
+        return $this->belongsTo('App\pic','idUser','idUser')->first();
+    }
 }

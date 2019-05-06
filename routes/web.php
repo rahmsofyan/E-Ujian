@@ -59,6 +59,9 @@ Route::get('/absenKuliah', 'AbsenKuliahController@index')->name('absenKuliah');
 Route::get('/absenKuliah/create', 'AbsenKuliahController@create')->name('absenKuliah.add');
 Route::post('/absenKuliah/statuskehadiran', 'AbsenKuliahController@UpdateStatusKehadiran')->name('absenKuliah.UpdateStatusKehadiran');
 Route::post('/absenKuliah/toleransikehadiran', 'AbsenKuliahController@UpdateToleransiKehadiran')->name('absenKuliah.UpdateToleransiKehadiran');
+//-----------Agenda by PIC
+Route::get('/myagenda', 'AgendaByPIC@index')->name('AgendaByPIC');
+
 //azzam jiul
 Route::get('/absenKuliah/berita/{idAgenda}', 'AbsenKuliahController@berita')->name('absenKuliah.berita');
 Route::get('/absenKuliah/{idAgenda}', 'AbsenKuliahController@tampilKehadiran')->name('absenKuliah.tampilKehadiran');

@@ -6,11 +6,12 @@ use App\absenKuliah;
 use App\agenda;
 use App\pic;
 use App\ruang;
+use App\User;
 use Illuminate\Http\Request;
 
 class AgendaController extends Controller
 {
-    public function __construct()
+    public function __construct(Request $request)
     {
         $this->middleware('auth');
     }
@@ -22,16 +23,13 @@ class AgendaController extends Controller
     public function index()
     {
         //
+        
         $a = agenda::orderBy('created_at', 'desc')->paginate(15);
+        
         return view('agenda.index',compact('a'));
 
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         $pic = pic::all();

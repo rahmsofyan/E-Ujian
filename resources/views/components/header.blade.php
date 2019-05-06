@@ -46,7 +46,14 @@
                             <li>
                                 <a style="text-decoration: none;" href="{{route('absenKuliah')}}"><i class="fa fa-check"></i>Absen Kuliah</a>
                             </li>
-
+                            @if(\Auth::check())
+                            @if (null!==\Auth::user()->PIC)
+                            <li>
+                                <a style="text-decoration: none;" href="{{route('AgendaByPIC')}}"><i class="fa fa-list"></i>My Agenda</a>
+                            </li>
+                            @endif
+                            @endif
+                            
                             @guest
                                 <li class="nav-item" style="margin-left:70px;">
                                     <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>

@@ -14,6 +14,12 @@
    <div class="panel-body border border-primary">
    <form class="form-horizontal" action="/pic/store" method="POST" >
     @csrf
+    <div class="form-group">
+      <label class="control-label col-sm-2">idUser</label>
+      <div class="col-sm-10">
+      <input type="text" class="form-control" id="idPIC" placeholder="{{$idUser}}" value="{{$idUser}}" name="idUser" readonly>
+      </div>
+    </div>
    <div class="form-group">
      <label class="control-label col-sm-2">idPIC(noSpasi)</label>
      <div class="col-sm-10">
@@ -22,7 +28,7 @@
    </div>
    <div class="form-group">
       <label class="control-label col-sm-2">Nama PIC</label>
-      <div class="col-sm-10"><input type="text" class="form-control" id="namaPIC" placeholder="Masukan Nama PIC" name="namaPIC"></div>
+      <div class="col-sm-10"><input type="text" class="form-control" id="namaPIC" placeholder="{{$nameUser}}" value="{{$nameUser}}" name="namaPIC"></div>
    </div>
    <div class="form-group">
       <label class="control-label col-sm-2">Keterangan</label>
