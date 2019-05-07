@@ -24,8 +24,6 @@
       <div class="row">
         <a href="{{ route('AgendaByPIC') }}" class="btn btn-danger" style="margin: 0px 5px">Kembali</a>
         <div class="btn-btn-group">
-          <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modal-interval">Toleransi Terlambat</button>
-          <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-status">Opsi Status</button>
           <button form="A"  class="btn btn-primary" id="print"><li class="fa fa-print"></li>Print</button>
         </div>
         
@@ -51,61 +49,7 @@
         <div class="panel-body">
         <div class="table table-responsive">
          @include('myagenda.tabelPenilaian')
-              <div id="modal-interval" class="modal inmodal fade" id="detailku" tabindex="-1" role="dialog"  aria-hidden="true">
-                  <div class="modal-dialog modal-dialog-centered">
-                      <div class="modal-content">
-                          <div class="modal-header">
-                              <h3 class="modal-title">Set Interval Keterlambatan</h3>
-                              <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                              
-                          </div>
-                          <form id="set-interval"  method="POST" action="/myagenda/toleransikehadiran" class="form-horizontal" enctype="multipart/form-data">
-                          <div class="modal-body">
-                              @csrf
-                              
-                              <!-- <input type="text" name="toleransi" id="toleransi" placeholder="menit"> -->
-                            <div class="col-7">  
-                              <h5>Toleransi Keterlambatan</h5>
-                              <div class="input-group">
-                                <input type="hidden"  value="{{$dosen->idAgenda}}" name="idAgenda">
-                                <input type="number" class="form-control" value="{{$dosen->toleransiKeterlambatan}}" name="toleransi">
-                                  <span class="input-group-btn">
-                                    <div class="input-group-text"><h6>Minutes</h6></div>
-                                  </span>
-
-                              </div>
-                            </div>
-                          </div>
-                          <div class="modal-footer">
-                              <button type="button" class="btn btn-white" data-dismiss="modal">Batal</button>
-                              <input type="submit" class="btn btn-primary" value="Set">
-                          </div>
-                          </form>
-
-                      </div>
-                  </div>
-              </div>
-              <!-- end modal -->
-
-              <div class="modal fade" id="modal-status" tabindex="-1" role="dialog" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                  <div class="modal-content" style="margin-top:60vh;">
-                    <div class="modal-header">
-                      <h4 class="modal-title">Opsi Status Kehadiran</h4>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    </div>
-                    <div class="modal-body">
-                        @include('myagenda/formKehadiran')                        
-                    </div>
-                    <div class="modal-footer">
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <!-- end modal -->
-
+         @include('myagenda.confignilai')
           </div>
           </div>
         </div>
@@ -132,5 +76,9 @@
 
             window.print();
         })
-      </script>
+</script>
+<script>
+  console.log($(#model));
+</script>
+
 @endsection

@@ -14,8 +14,8 @@ class DaftarNilai extends Migration
     public function up()
     {
         Schema::create('daftarnilai', function (Blueprint $table) {
-            $table->integer('idPenilaian',15)->unique();
-            $table->string('idUser',20)->index();
+            $table->string('idPenilaian');
+            $table->string('idUser',20);
             $table->float('nilai');
             $table->foreign('idPenilaian')->references('idPenilaian')->on('penilaians')
             ->onUpdate('cascade')

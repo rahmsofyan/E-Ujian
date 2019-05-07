@@ -6,6 +6,8 @@ namespace App\Http\Controllers;
 use App\absenKuliah;
 use App\kehadiran;
 use App\agenda;
+use App\penilaian;
+use App\daftarnilai;
 use Illuminate\Http\Request;
 use PDF;
 use Illuminate\Support\Facades\DB;
@@ -182,21 +184,48 @@ class agendabyPICController extends Controller
         ->select('pic.namaPIC', 'agenda.namaAgenda','agenda.WaktuMulai','agenda.idAgenda','agenda.toleransiKeterlambatan')
         ->where('agenda.idAgenda', '=', $idAgenda)
         ->get()->first();
-//dd($dosen);
-
+        
+        
         $tanggals = DB::table('absenKuliah')
            ->select('tglPertemuan')
             ->orderBy('tglPertemuan','asc')
             ->where('fk_idAgenda','=',$idAgenda)
              ->get();
 
-// $wkwks = DB::select('exec GetData(?)',array($idAgenda));
+        $idAgenda = $dosen->idAgenda;
 
-    $statusKehadiran = ['izin','alpha'];
-    return view('myagenda.tampilPenilaian', compact('kehadiran', 'dosen', 'tanggals','statusKehadiran'));
+        $penilaian = penilaian::where('idAgenda','=',$idAgenda)
+                    ->get();
+        
+        $dumpnilai = collect();
+        foreach ($penilaian as $key => $item) {
+            $dumpnilai[$key] = daftarnilai::
+                                   join('users', 'daftarnilai.idUser', '=', 'users.idUser')
+                                   ->where('idPenilaian','=',$item->idPenilaian)
+                                   ->select('daftarnilai.idPenilaian','daftarnilai.nilai', 'users.idUser','users.name')
+                                   ->get();
+        }
+        
+        $daftarnilai = [];
+        foreach ($kehadiran as $key => $row) {
+            $daftarnilai[$key][0] = $row->idUser;
+            $daftarnilai[$key][1] = $row->name;
+        }
+
+        for($j=0;isset($daftarnilai) && $j<count($daftarnilai);$j++)
+            for($i=0;$i<count($penilaian);$i++){
+                if(isset($dumpnilai[$i])==false)continue; 
+                $daftarnilai[$j][$i+2] = $dumpnilai[$i][$j]->nilai;
+            }
+        $statusKehadiran = ['izin','alpha'];
+        return view('myagenda.tampilPenilaian', compact('daftarnilai', 'dosen', 'tanggals','penilaian'));
     }
     
-
+    public function tambahpenilaian(Request $request)
+    {
+        echo 'hallo';
+        //return dd($request);
+    }
     public function UpdateStatusKehadiran(Request $request)
     {
         kehadiran::where('idUser',$request->nrp)

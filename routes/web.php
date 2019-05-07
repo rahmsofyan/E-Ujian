@@ -82,6 +82,7 @@ Route::get('/myagenda/penilaian/{idAgenda}', 'AgendaByPICController@tampilNilai'
 Route::post('/myagenda/store', 'AgendaByPICController@store');
 Route::get('/myagenda/{idAbsen}/edit', 'AgendaByPICController@edit')->name('AgendaByPIC.edit');
 Route::post('/myagenda/{idAbsen}', 'AgendaByPICController@update')->name('AgendaByPIC.update');
+Route::post('/myagenda/tambahpenilaian', 'AgendaByPICController@berita')->name('AgendaByPIC.tambahpenilaian');
 Route::get('/myagenda/delete/{idAbsen}', 'AgendaByPICController@destroy');
 
 

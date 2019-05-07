@@ -14,7 +14,7 @@ class CreateAbsenKuliahsTable extends Migration
     public function up()
     {
         Schema::create('absenKuliah', function (Blueprint $table) {
-            $table->increments('idAbsen');
+        $table->increments('idAbsen');
 	    $table->string('fk_idAgenda',15)->index();
 	    $table->date('tglPertemuan');
 	    $table->time('waktuMulai');

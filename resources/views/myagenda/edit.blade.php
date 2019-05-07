@@ -20,18 +20,7 @@
 
     <div class="panel-body border border-primary">
      <form class="form-horizontal" action="{{ route('AgendaByPIC.update', $a->id) }}" method="POST">
-      @csrf
-       <!-- <div class="form-group">
-         <label class="control-label col-sm-2">Agenda</label>
-         <div class="col-sm-10">
-          <input type="text" class="form-control" id="fk_idAgenda" placeholder="Masukan idAgenda" name="fk_idAgenda">
-          <select class="form-control" id="fk_idAgenda" placeholder="Masukan fk_idAgenda" name="fk_idAgenda">
-              <option>Pilih Agenda</option>
-              <option value="{{ $a->idAgenda }}">{{ $a->namaAgenda }}</option>
-          </select>
-         </div>
-       </div> -->
-
+      @csrf 
        <div class="form-group">
           <label class="control-label col-sm-2">Tanggal Pertemuan</label>
           <div class="col-sm-10">

@@ -14,7 +14,7 @@ class Penilaian extends Migration
     public function up()
     {
         Schema::create('penilaians', function (Blueprint $table) {
-            $table->integer('idPenilaian')->index();
+            $table->string('idPenilaian')->index();
             $table->string('idAgenda',15)->index();
             $table->string('nama')->index();
             $table->float('porsi');
