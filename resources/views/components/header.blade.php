@@ -46,6 +46,7 @@
                             <li>
                                 <a style="text-decoration: none;" href="{{route('absenKuliah')}}"><i class="fa fa-check"></i>Absen Kuliah</a>
                             </li>
+                            
                             @if(\Auth::check())
                             @if (\Auth::user()->getPIC()->exists())
                             <li>

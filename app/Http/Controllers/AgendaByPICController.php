@@ -11,7 +11,7 @@ use PDF;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 
-class agendabyPIC extends Controller
+class agendabyPICController extends Controller
 {
     var $k;
     public function __construct()
@@ -35,14 +35,16 @@ class agendabyPIC extends Controller
 
     public function index()
     {
-        //dd(\Auth::user()->PIC->idPIC);
+
         $idPIC = \Auth::user()->getPIC()->idPIC;
-        $a = DB::table('agenda')
-            ->where('agenda.fk_idPIC','=',$idPIC)
-            ->select('agenda.idAgenda', 'agenda.namaAgenda',)
-            ->get();
-        
-        return view('absenKuliah.listKehadiran',compact('a'));
+
+        $listAgenda = DB::table('agenda')
+        ->join('pic', 'agenda.fk_idPIC', '=', 'pic.idPIC')
+        ->select('agenda.idAgenda', 'agenda.namaAgenda', 'pic.namaPIC')
+        ->where('agenda.fk_idPIC','=',$idPIC)
+        ->get();
+
+        return view('myagenda.listKehadiran',compact('listAgenda'));
     }
 
     /**
@@ -54,7 +56,7 @@ class agendabyPIC extends Controller
     public function create()
     {
         $agenda = agenda::all();
-        return view('absenKuliah.create', compact('agenda'));
+        return view('myagenda.create', compact('agenda'));
     }
 
     /**
@@ -69,7 +71,7 @@ class agendabyPIC extends Controller
         // $test = $request->all();
         // dd($test);
        absenKuliah::create($request->all());
-       return redirect('/absenKuliah');
+       return redirect('/myagenda');
     }
 
     /**
@@ -93,7 +95,7 @@ class agendabyPIC extends Controller
     {
         //
         $a = absenKuliah::findorfail($idAbsen);
-        return view ('absenKuliah.edit',compact('a'));
+        return view ('myagenda.edit',compact('a'));
     }
 
     /**
@@ -108,7 +110,7 @@ class agendabyPIC extends Controller
         //
         $a = absenKuliah::findorfail($id);
         $a->update($request->all());
-        return redirect('absenKuliah/berita/'.$a->fk_idAgenda);
+        return redirect('myagenda/berita/'.$a->fk_idAgenda);
 
     }
 
@@ -123,7 +125,7 @@ class agendabyPIC extends Controller
         //
         $a = absenKuliah::findorfail($id);
         $a->delete();
-        return redirect('/absenKuliah');
+        return redirect('/myagenda');
 
     }
 
@@ -131,7 +133,7 @@ class agendabyPIC extends Controller
     {
         //$a=absenKuliah::all()->where('absenKuliah.fk_idAgenda', '=', $idAgenda);
         $a = DB::table('absenKuliah')->where('fk_idAgenda', '=', $idAgenda)->orderBy('tglPertemuan', 'asc')->get();
-        return view('absenKuliah.index',compact('a'));
+        return view('myagenda.index',compact('a'));
     }
 
     public function tampilKehadiran($idAgenda)
@@ -163,7 +165,35 @@ class agendabyPIC extends Controller
         // $wkwks = DB::select('exec GetData(?)',array($idAgenda));
         
         $statusKehadiran = ['izin','alpha'];
-        return view('absenKuliah.tampilKehadiran', compact('kehadiran', 'dosen', 'tanggals','statusKehadiran'));
+        return view('myagenda.tampilKehadiran', compact('kehadiran', 'dosen', 'tanggals','statusKehadiran'));
+    }
+
+    public function tampilNilai($idAgenda)
+    {
+        $kehadiran = DB::table('kehadiranv2')
+                    ->join('users', 'kehadiranv2.idUser', '=', 'users.idUser')
+                    ->leftjoin('pic', 'kehadiranv2.idUser', '=', 'pic.idPIC')
+                    ->select('kehadiranv2.*', 'users.name',)
+                    ->where('kehadiranv2.idAgenda', '=', $idAgenda)
+                    ->get();
+
+        $dosen = DB::table('agenda')
+        ->join('pic', 'agenda.fk_idPIC', '=', 'pic.idPIC')
+        ->select('pic.namaPIC', 'agenda.namaAgenda','agenda.WaktuMulai','agenda.idAgenda','agenda.toleransiKeterlambatan')
+        ->where('agenda.idAgenda', '=', $idAgenda)
+        ->get()->first();
+//dd($dosen);
+
+        $tanggals = DB::table('absenKuliah')
+           ->select('tglPertemuan')
+            ->orderBy('tglPertemuan','asc')
+            ->where('fk_idAgenda','=',$idAgenda)
+             ->get();
+
+// $wkwks = DB::select('exec GetData(?)',array($idAgenda));
+
+    $statusKehadiran = ['izin','alpha'];
+    return view('myagenda.tampilPenilaian', compact('kehadiran', 'dosen', 'tanggals','statusKehadiran'));
     }
     
 

@@ -59,9 +59,6 @@ Route::get('/absenKuliah', 'AbsenKuliahController@index')->name('absenKuliah');
 Route::get('/absenKuliah/create', 'AbsenKuliahController@create')->name('absenKuliah.add');
 Route::post('/absenKuliah/statuskehadiran', 'AbsenKuliahController@UpdateStatusKehadiran')->name('absenKuliah.UpdateStatusKehadiran');
 Route::post('/absenKuliah/toleransikehadiran', 'AbsenKuliahController@UpdateToleransiKehadiran')->name('absenKuliah.UpdateToleransiKehadiran');
-//-----------Agenda by PIC
-Route::get('/myagenda', 'AgendaByPIC@index')->name('AgendaByPIC');
-
 //azzam jiul
 Route::get('/absenKuliah/berita/{idAgenda}', 'AbsenKuliahController@berita')->name('absenKuliah.berita');
 Route::get('/absenKuliah/{idAgenda}', 'AbsenKuliahController@tampilKehadiran')->name('absenKuliah.tampilKehadiran');
@@ -70,6 +67,23 @@ Route::post('/absenKuliah/store', 'AbsenKuliahController@store');
 Route::get('/absenKuliah/{idAbsen}/edit', 'AbsenKuliahController@edit')->name('absenKuliah.edit');
 Route::post('/absenKuliah/{idAbsen}', 'AbsenKuliahController@update')->name('absenKuliah.update');
 Route::get('/absenKuliah/delete/{idAbsen}', 'AbsenKuliahController@destroy');
+//-----------------------------------------------------------------------------------
+
+//-----------Agenda by PIC
+Route::get('/myagenda', 'AgendaByPICController@index')->name('AgendaByPIC');
+Route::get('/myagenda/create', 'AgendaByPICController@create')->name('AgendaByPIC.add');
+Route::post('/myagenda/statuskehadiran', 'AgendaByPICController@UpdateStatusKehadiran')->name('AgendaByPIC.UpdateStatusKehadiran');
+Route::post('/myagenda/toleransikehadiran', 'AgendaByPICController@UpdateToleransiKehadiran')->name('AgendaByPIC.UpdateToleransiKehadiran');
+//-----------Agenda by PIC-->berita
+Route::get('/myagenda/berita/{idAgenda}', 'AgendaByPICController@berita')->name('AgendaByPIC.berita');
+Route::get('/myagenda/{idAgenda}', 'AgendaByPICController@tampilKehadiran')->name('AgendaByPIC.tampilKehadiran');
+Route::get('/myagenda/penilaian/{idAgenda}', 'AgendaByPICController@tampilNilai')->name('AgendaByPIC.tampilNilai');
+//-----------Agenda by PIC
+Route::post('/myagenda/store', 'AgendaByPICController@store');
+Route::get('/myagenda/{idAbsen}/edit', 'AgendaByPICController@edit')->name('AgendaByPIC.edit');
+Route::post('/myagenda/{idAbsen}', 'AgendaByPICController@update')->name('AgendaByPIC.update');
+Route::get('/myagenda/delete/{idAbsen}', 'AgendaByPICController@destroy');
+
 
 Route::resource('download','DownloadController');
 

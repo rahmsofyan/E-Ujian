@@ -1,7 +1,7 @@
 @extends('layouts.main')
 
 @section('title')
-    Absen Kuliah
+    My Agenda
 @endsection
 
 @section('contents')
@@ -31,14 +31,16 @@
 			            </tr> 
 			        </thead>
 			        <tbody>
-			         @foreach($a as $key => $agenda)
+			         @foreach($listAgenda as $key => $agenda)
 			         <tr>
 			         <td> {{ $key+1}}</td>
 			         <td> {{ $agenda->idAgenda}}</td>
 			         <td> {{ $agenda->namaAgenda}}</td>
 			         <td> {{  $agenda->namaPIC}} </td>
 			         <td colspan="2">
-			         	<a href="{{ route('absenKuliah.tampilKehadiran', $agenda->idAgenda) }}" class=" btn btn-info" style="margin: 5px">Lihat Absensi</a>
+			         	<a href="{{ route('AgendaByPIC.tampilKehadiran', $agenda->idAgenda) }}" class=" btn btn-info" style="margin: 5px">Lihat Absensi</a>
+						 <a href="{{ route('AgendaByPIC.tampilNilai', $agenda->idAgenda) }}" class=" btn btn-warning" style="margin: 5px">Penilaian</a>
+						 <a href="{{ route('AgendaByPIC.berita', $agenda->idAgenda) }}" class=" btn btn-primary" style="margin: 5px">Berita Acara</a>
 			         </td>			         
 			         </tr>
 			         @endforeach
