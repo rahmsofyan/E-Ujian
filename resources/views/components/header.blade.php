@@ -47,7 +47,7 @@
                                 <a style="text-decoration: none;" href="{{route('absenKuliah')}}"><i class="fa fa-check"></i>Absen Kuliah</a>
                             </li>
                             @if(\Auth::check())
-                            @if (null!==\Auth::user()->PIC)
+                            @if (\Auth::user()->getPIC()->exists())
                             <li>
                                 <a style="text-decoration: none;" href="{{route('AgendaByPIC')}}"><i class="fa fa-list"></i>My Agenda</a>
                             </li>

@@ -36,8 +36,9 @@ class agendabyPIC extends Controller
     public function index()
     {
         //dd(\Auth::user()->PIC->idPIC);
+        $idPIC = \Auth::user()->getPIC()->idPIC;
         $a = DB::table('agenda')
-            ->where('agenda.fk_idPIC','=',\Auth::user()->PIC->idPIC)
+            ->where('agenda.fk_idPIC','=',$idPIC)
             ->select('agenda.idAgenda', 'agenda.namaAgenda',)
             ->get();
         
