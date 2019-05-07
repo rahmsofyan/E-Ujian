@@ -48,7 +48,7 @@
                             </li>
                             
                             @if(\Auth::check())
-                            @if (\Auth::user()->getPIC()->exists())
+                            @if (is_null(\Auth::user()->getPIC())==false && \Auth::user()->getPIC()->exists())
                             <li>
                                 <a style="text-decoration: none;" href="{{route('AgendaByPIC')}}"><i class="fa fa-list"></i>My Agenda</a>
                             </li>
