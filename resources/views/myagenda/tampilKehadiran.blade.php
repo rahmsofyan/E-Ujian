@@ -86,14 +86,13 @@
                   </div>
               </div>
               <!-- end modal-interval -->
-              <!---- modal-interval-->
+              <!---- modal-libur-->
               <div id="modal-libur" class="modal inmodal fade" id="detailku" tabindex="-1" role="dialog"  aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h3 class="modal-title">Set Untuk Kelas Kosong</h3>
                             <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                            
                         </div>
                       <form id="set-interval"  method="POST" action="{{route('AgendaByPIC.UpdateJadwalKehadiran')}}" class="form-horizontal" enctype="multipart/form-data">
                         <div class="modal-body">
@@ -106,18 +105,34 @@
                                  @endfor
                               </select>
                             </div>
-                          
                         </div>
+                        
                         <div class="modal-footer">
                             <button type="button" class="btn btn-white" data-dismiss="modal">Batal</button>
-                            <input type="submit" class="btn btn-primary" value="Set">
+                            <button type="button" class="btn btn-primary" data-dismiss="modal" data-toggle="modal" data-target=".warning-set">Set</button>
                         </div>
-                        </form>
-
+                        
                     </div>
                 </div>
             </div>
-            <!-- end modal-interval -->
+            <!-- end modal-libur -->
+            <!-- modal-warnning-libur  -->
+            <div class="modal fade warning-set inmodal " tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                  <div class="modal-content" style="margin-top:30vh;">
+                      <div class="modal-header">
+                          <h3 class="modal-title">Yakin untuk mengganti hari ke libur?</h3>
+                      </div>
+                      <div class="modal-body">
+                        <button type="button" class="btn btn-white" data-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-danger" value="Set">Submit</button>
+                      </div>
+                      
+                  </form>
+                  </div>
+                </div>
+              </div>
+            <!--end modal-warnning-libur  -->
               <!-- end modal status -->
               <div class="modal fade" id="modal-status" tabindex="-1" role="dialog" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
