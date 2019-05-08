@@ -214,7 +214,8 @@ class agendabyPICController extends Controller
 
         for($j=0;isset($daftarnilai) && $j<count($daftarnilai);$j++)
             for($i=0;$i<count($penilaian);$i++){
-                if(isset($dumpnilai[$i])==false)continue; 
+                if(isset($dumpnilai[$i][$j])==false)$nilai = 0;
+                else $nilai = $dumpnilai[$i][$j]->nilai;
                 $daftarnilai[$j][$i+2] = $dumpnilai[$i][$j]->nilai;
             }
         $statusKehadiran = ['izin','alpha'];
@@ -229,7 +230,7 @@ class agendabyPICController extends Controller
     public function UpdateStatusKehadiran(Request $request)
     {
         kehadiran::where('idUser',$request->nrp)
-                ->where('idAgenda',$request->idAgenda)
+                  ->where('idAgenda',$request->idAgenda)
                     ->update([$request->p => $request->status]);
         return redirect()->back();
     }
