@@ -25,6 +25,7 @@
         <a href="{{ route('AgendaByPIC') }}" class="btn btn-danger" style="margin: 0px 5px">Kembali</a>
         <div class="btn-btn-group">
           <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modal-interval">Toleransi Terlambat</button>
+          <button type="button" class="btn btn-second" data-toggle="modal" data-target="#modal-libur">Kelas Libur</button>
           <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-status">Opsi Status</button>
           <button form="A"  class="btn btn-primary" id="print"><li class="fa fa-print"></li>Print</button>
         </div>
@@ -51,6 +52,7 @@
         <div class="panel-body">
         <div class="table table-responsive">
          @include('myagenda.tabelKehadiran')
+         <!---- modal-interval-->
               <div id="modal-interval" class="modal inmodal fade" id="detailku" tabindex="-1" role="dialog"  aria-hidden="true">
                   <div class="modal-dialog modal-dialog-centered">
                       <div class="modal-content">
@@ -62,8 +64,6 @@
                           <form id="set-interval"  method="POST" action="/myagenda/toleransikehadiran" class="form-horizontal" enctype="multipart/form-data">
                           <div class="modal-body">
                               @csrf
-                              
-                              <!-- <input type="text" name="toleransi" id="toleransi" placeholder="menit"> -->
                             <div class="col-7">  
                               <h5>Toleransi Keterlambatan</h5>
                               <div class="input-group">
@@ -85,8 +85,40 @@
                       </div>
                   </div>
               </div>
-              <!-- end modal -->
+              <!-- end modal-interval -->
+              <!---- modal-interval-->
+              <div id="modal-libur" class="modal inmodal fade" id="detailku" tabindex="-1" role="dialog"  aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 class="modal-title">Set Untuk Kelas Kosong</h3>
+                            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                            
+                        </div>
+                      <form id="set-interval"  method="POST" action="{{route('AgendaByPIC.UpdateJadwalKehadiran')}}" class="form-horizontal" enctype="multipart/form-data">
+                        <div class="modal-body">
+                            @csrf
+                            <div class="input-group">
+                              <input type="hidden"  value="{{$dosen->idAgenda}}" name="idAgenda">
+                              <select name="p">
+                                @for ($i = 1; $i < $jmlPertemuan; $i++)
+                              <option value="{{'p'.$i}}" {{($i==1)?"selected":""}} >Pertemuan {{$i}}</option>
+                                 @endfor
+                              </select>
+                            </div>
+                          
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-white" data-dismiss="modal">Batal</button>
+                            <input type="submit" class="btn btn-primary" value="Set">
+                        </div>
+                        </form>
 
+                    </div>
+                </div>
+            </div>
+            <!-- end modal-interval -->
+              <!-- end modal status -->
               <div class="modal fade" id="modal-status" tabindex="-1" role="dialog" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                   <div class="modal-content" style="margin-top:60vh;">

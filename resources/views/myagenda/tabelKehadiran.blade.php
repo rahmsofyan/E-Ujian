@@ -29,7 +29,7 @@
             <td> {{ $row->idUser}}</td>
             <td colspan="3"> {{ $row->name }}</td>
             <?php 
-            $result = AgendaByPICController::filterhadir($tanggals,$row,$dosen->WaktuMulai,16,10);
+            $result = AgendaByPICController::filterhadir($tanggals,$row,$dosen->WaktuMulai,$jmlPertemuan-1,$dosen->toleransiKeterlambatan);
             for($index=1;$index<=$jmlPertemuan;$index++){
                 if(isset($result['p'.$index]['izin'])) $total['p'.$index]['izin']+=1;
                 else if(isset($result['p'.$index]['alpha'])) $total['p'.$index]['alpha']+=1;
