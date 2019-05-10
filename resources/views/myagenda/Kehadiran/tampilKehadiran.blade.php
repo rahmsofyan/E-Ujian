@@ -50,7 +50,7 @@
 
         <div class="panel-body">
         <div class="table table-responsive">
-         @include('myagenda.tabelKehadiran')
+         @include('myagenda.kehadiran.tabelKehadiran')
               <div id="modal-interval" class="modal inmodal fade" id="detailku" tabindex="-1" role="dialog"  aria-hidden="true">
                   <div class="modal-dialog modal-dialog-centered">
                       <div class="modal-content">
@@ -97,7 +97,7 @@
                       </button>
                     </div>
                     <div class="modal-body">
-                        @include('myagenda/formKehadiran')                        
+                        @include('myagenda/kehadiran/formKehadiran')                        
                     </div>
                     <div class="modal-footer">
                     </div>

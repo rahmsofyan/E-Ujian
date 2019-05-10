@@ -132,7 +132,7 @@ class AbsenKuliahController extends Controller
         $kehadiran = DB::table('kehadiranv2')
                     ->join('users', 'kehadiranv2.idUser', '=', 'users.idUser')
                     ->leftjoin('pic', 'kehadiranv2.idUser', '=', 'pic.idPIC')
-                    ->select('kehadiranv2.*', 'users.name',)
+                    ->select('kehadiranv2.*', 'users.name')
                     ->where('kehadiranv2.idAgenda', '=', $idAgenda)
                     ->get();
 //        dd($kehadiran);

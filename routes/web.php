@@ -77,9 +77,9 @@ Route::post('/myagenda/toleransikehadiran', 'AgendaByPICController@UpdateToleran
 //-----------Agenda by PIC-->berita
 Route::get('/myagenda/berita/{idAgenda}', 'AgendaByPICController@berita')->name('AgendaByPIC.berita');
 Route::get('/myagenda/{idAgenda}', 'AgendaByPICController@tampilKehadiran')->name('AgendaByPIC.tampilKehadiran');
-Route::get('/myagenda/penilaian/{idAgenda}', 'AgendaByPICController@tampilNilai')->name('AgendaByPIC.tampilNilai');
-//-----------Agenda by PIC
+//-----------Agenda by PIC Penilaian
 Route::post('/myagenda/store', 'AgendaByPICController@store');
+Route::get('/myagenda/penilaian/{idAgenda}', 'AgendaByPICController@detailNilai')->name('AgendaByPIC.tampilNilai');
 Route::get('/myagenda/{idAbsen}/edit', 'AgendaByPICController@edit')->name('AgendaByPIC.edit');
 Route::post('/myagenda/{idAbsen}', 'AgendaByPICController@update')->name('AgendaByPIC.update');
 Route::post('/myagenda/tambahpenilaian', 'AgendaByPICController@berita')->name('AgendaByPIC.tambahpenilaian');

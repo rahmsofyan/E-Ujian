@@ -8,8 +8,10 @@ use App\kehadiran;
 use App\agenda;
 use App\penilaian;
 use App\daftarnilai;
+use App\nilaiMhs;
 use Illuminate\Http\Request;
 use PDF;
+use App\user;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 
@@ -21,11 +23,6 @@ class agendabyPICController extends Controller
         $this->middleware('auth');
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function agendabyPIC($idPIC)
     {
         if($idPIC!==null)
@@ -46,14 +43,9 @@ class agendabyPICController extends Controller
         ->where('agenda.fk_idPIC','=',$idPIC)
         ->get();
 
-        return view('myagenda.listKehadiran',compact('listAgenda'));
+        return view('myagenda.kehadiran.listKehadiran',compact('listAgenda'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     // menampilkan halaman untk nambah berita acara
     public function create()
     {
@@ -61,38 +53,20 @@ class agendabyPICController extends Controller
         return view('myagenda.create', compact('agenda'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function store(Request $request)
     {
-        // //
-        // $test = $request->all();
-        // dd($test);
+
        absenKuliah::create($request->all());
        return redirect('/myagenda');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\absenKuliah  $absenKuliah
-     * @return \Illuminate\Http\Response
-     */
+
     public function show(absenKuliah $absenKuliah)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\absenKuliah  $absenKuliah
-     * @return \Illuminate\Http\Response
-     */
     public function edit($idAbsen)
     {
         //
@@ -100,13 +74,7 @@ class agendabyPICController extends Controller
         return view ('myagenda.edit',compact('a'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\absenKuliah  $absenKuliah
-     * @return \Illuminate\Http\Response
-     */
+
     public function update(Request $request, $id)
     {
         //
@@ -116,12 +84,7 @@ class agendabyPICController extends Controller
 
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\absenKuliah  $absenKuliah
-     * @return \Illuminate\Http\Response
-     */
+
     public function destroy(absenKuliah $absenKuliah)
     {
         //
@@ -135,7 +98,7 @@ class agendabyPICController extends Controller
     {
         //$a=absenKuliah::all()->where('absenKuliah.fk_idAgenda', '=', $idAgenda);
         $a = DB::table('absenKuliah')->where('fk_idAgenda', '=', $idAgenda)->orderBy('tglPertemuan', 'asc')->get();
-        return view('myagenda.index',compact('a'));
+        return view('myagenda.berita.index',compact('a'));
     }
 
     public function tampilKehadiran($idAgenda)
@@ -146,7 +109,7 @@ class agendabyPICController extends Controller
         $kehadiran = DB::table('kehadiranv2')
                     ->join('users', 'kehadiranv2.idUser', '=', 'users.idUser')
                     ->leftjoin('pic', 'kehadiranv2.idUser', '=', 'pic.idPIC')
-                    ->select('kehadiranv2.*', 'users.name',)
+                    ->select('kehadiranv2.*', 'users.name')
                     ->where('kehadiranv2.idAgenda', '=', $idAgenda)
                     ->get();
 //        dd($kehadiran);
@@ -167,7 +130,25 @@ class agendabyPICController extends Controller
         // $wkwks = DB::select('exec GetData(?)',array($idAgenda));
         
         $statusKehadiran = ['izin','alpha'];
-        return view('myagenda.tampilKehadiran', compact('kehadiran', 'dosen', 'tanggals','statusKehadiran'));
+        return view('myagenda.kehadiran.tampilKehadiran', compact('kehadiran', 'dosen', 'tanggals','statusKehadiran'));
+    }
+
+    public function detailNilai($idAgenda){
+        $mhs = nilaiMhs::where('idAgenda',$idAgenda)->get();
+        $dosen = DB::table('agenda')
+        ->join('pic', 'agenda.fk_idPIC', '=', 'pic.idPIC')
+        ->select('pic.namaPIC', 'agenda.namaAgenda','agenda.WaktuMulai','agenda.idAgenda','agenda.toleransiKeterlambatan')
+        ->where('agenda.idAgenda', '=', $idAgenda)
+        ->get()->first();
+        
+        
+        $tanggals = DB::table('absenKuliah')
+           ->select('tglPertemuan')
+            ->orderBy('tglPertemuan','asc')
+            ->where('fk_idAgenda','=',$idAgenda)
+             ->get();
+
+        return view('myagenda.penilaian.tampilPenilaian',compact('mhs','dosen','tanggals'));
     }
 
     public function tampilNilai($idAgenda)
@@ -175,7 +156,7 @@ class agendabyPICController extends Controller
         $kehadiran = DB::table('kehadiranv2')
                     ->join('users', 'kehadiranv2.idUser', '=', 'users.idUser')
                     ->leftjoin('pic', 'kehadiranv2.idUser', '=', 'pic.idPIC')
-                    ->select('kehadiranv2.*', 'users.name',)
+                    ->select('kehadiranv2.*', 'users.name')
                     ->where('kehadiranv2.idAgenda', '=', $idAgenda)
                     ->get();
 
@@ -205,7 +186,7 @@ class agendabyPICController extends Controller
                                    ->select('daftarnilai.idPenilaian','daftarnilai.nilai', 'users.idUser','users.name')
                                    ->get();
         }
-        
+
         $daftarnilai = [];
         foreach ($kehadiran as $key => $row) {
             $daftarnilai[$key][0] = $row->idUser;
@@ -216,15 +197,13 @@ class agendabyPICController extends Controller
             for($i=0;$i<count($penilaian);$i++){
                 if(isset($dumpnilai[$i])==false)continue; 
                 $daftarnilai[$j][$i+2] = $dumpnilai[$i][$j]->nilai;
-            }
-        $statusKehadiran = ['izin','alpha'];
-        return view('myagenda.tampilPenilaian', compact('daftarnilai', 'dosen', 'tanggals','penilaian'));
+            }   
+        return view('myagenda.penilaian.tampilPenilaian', compact('daftarnilai', 'dosen', 'tanggals','penilaian'));
     }
     
     public function tambahpenilaian(Request $request)
     {
-        echo 'hallo';
-        //return dd($request);
+       
     }
     public function UpdateStatusKehadiran(Request $request)
     {

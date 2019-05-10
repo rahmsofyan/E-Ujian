@@ -9,14 +9,14 @@
 <div id="page-wrapper">
    <div class="row">
        <div class="col-lg-12">
-          <h1 class="page-header text-center">Data Absen Kuliah</h1>
+          <h1 class="page-header text-center">Data Agenda Kuliah Saya</h1>
           <hr class="col-md-12">
         </div>
     </div>
 
     <div class="panel panel-default">
        <div class="panel-heading" style="background-color: #013880;color: white;margin-bottom: 10px;">
-        <i class="fa fa-user fa-fw"></i><b>Data Absen Kuliah</b>
+        <i class="fa fa-user fa-fw"></i><b>Data Agenda Kuliah Saya</b>
        </div>
         <div class="panel-body">
 	        <div class="table table-responsive">

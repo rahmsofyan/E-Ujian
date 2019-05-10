@@ -35,5 +35,9 @@ class User extends Authenticatable
         return $this->belongsTo('App\pic','idUser','idUser')->first();
     }
 
+    public function namaMhs(){
+        return $this->hasMany('App\nilaiMhs', 'idUser');
+    }
+
     
 }

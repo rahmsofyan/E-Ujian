@@ -96,7 +96,7 @@ DROP TABLE IF EXISTS `daftarnilai`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `daftarnilai` (
-  `idPenilaian` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `idPenilaian` varchar(155) COLLATE utf8mb4_unicode_ci NOT NULL,
   `idUser` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
   `nilai` double(8,2) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -355,7 +355,7 @@ DROP TABLE IF EXISTS `penilaians`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `penilaians` (
-  `idPenilaian` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `idPenilaian` varchar(155) COLLATE utf8mb4_unicode_ci NOT NULL,
   `idAgenda` varchar(15) COLLATE utf8mb4_unicode_ci NOT NULL,
   `nama` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `porsi` double(8,2) NOT NULL,
@@ -448,10 +448,10 @@ DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `idUser` varchar(25) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(155) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(155) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
-  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(155) COLLATE utf8mb4_unicode_ci NOT NULL,
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
