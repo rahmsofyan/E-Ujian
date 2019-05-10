@@ -57,8 +57,10 @@
                           <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                           
                       </div>
-                      <form method="POST" action="{{ route('AgendaByPIC.updateNilai')}}" class="form-horizontal" enctype="multipart/form-data">
+                      <form name="UpdateNilai" method="POST" action="{{ route('AgendaByPIC.updateNilai')}}" onsubmit="return Validator()" class="form-horizontal" enctype="multipart/form-data">
                       <div class="modal-body">
+                        <div class="alert alert-danger hidden" id="edt_alertform">
+                        </div>
                           @csrf
                           @include('myagenda/penilaian/formModal')  
 
@@ -131,9 +133,53 @@
 
             });
 
+            $("#detailku").on('hidden.bs.modal',function(){
+                $("#nilai1-container").removeClass("has-error");
+                $("#nilai2-container").removeClass("has-error");
+                $("#nilai3-container").removeClass("has-error");
+                $("#nilai4-container").removeClass("has-error");
+                $("#edt_alertform").addClass("hidden");
+            });
+
         });
 
     </script>
+    <script> 
+        function Validator()                                    
+        { 
+            var nilai1 = document.forms["UpdateNilai"]["nilai1"];               
+            var nilai2 = document.forms["UpdateNilai"]["nilai2"];    
+            var nilai3 = document.forms["UpdateNilai"]["nilai3"];  
+            var nilai4 =  document.forms["UpdateNilai"]["nilai4"];
+           
+            if (nilai1.value > 100 || nilai1.value < 0 )                                  
+            { 
+                $("#nilai1-container").addClass("has-error");
+                $("#edt_alertform").html("Nilai tidak Valid!").removeClass("hidden");
+                return false; 
+            }
+            
+            if (nilai2.value > 100 || nilai2.value < 0 )                                  
+            { 
+                $("#nilai2-container").addClass("has-error");
+                $("#edt_alertform").html("Nilai tidak Valid!").removeClass("hidden");
+                return false; 
+            }
+
+            if (nilai3.value > 100 || nilai3.value < 0 )                                  
+            { 
+                $("#nilai3-container").addClass("has-error");
+                $("#edt_alertform").html("Nilai tidak Valid!").removeClass("hidden");
+                return false; 
+            }
+            if (nilai4.value > 100 || nilai4.value < 0 )                                  
+            { 
+                $("#nilai4-container").addClass("has-error");
+                $("#edt_alertform").html("Nilai tidak Valid!").removeClass("hidden");
+                return false; 
+            }
+            return true; 
+        }</script> 
 
 
 @endsection
