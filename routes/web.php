@@ -79,12 +79,16 @@ Route::post('/myagenda/jadwalkehadiran', 'AgendaByPICController@UpdateJadwalKeha
 Route::get('/myagenda/berita/{idAgenda}', 'AgendaByPICController@berita')->name('AgendaByPIC.berita');
 Route::get('/myagenda/{idAgenda}', 'AgendaByPICController@tampilKehadiran')->name('AgendaByPIC.tampilKehadiran');
 //-----------Agenda by PIC Penilaian
-Route::post('/myagenda/store', 'AgendaByPICController@store');
+
 Route::get('/myagenda/penilaian/{idAgenda}', 'AgendaByPICController@detailNilai')->name('AgendaByPIC.tampilNilai');
+Route::post('/myagenda/penilaian/update', 'AgendaByPICController@updateNilai')->name('AgendaByPIC.updateNilai');
+
+
+//undefined route??
 Route::get('/myagenda/{idAbsen}/edit', 'AgendaByPICController@edit')->name('AgendaByPIC.edit');
 Route::post('/myagenda/{idAbsen}', 'AgendaByPICController@update')->name('AgendaByPIC.update');
-Route::post('/myagenda/tambahpenilaian', 'AgendaByPICController@berita')->name('AgendaByPIC.tambahpenilaian');
 Route::get('/myagenda/delete/{idAbsen}', 'AgendaByPICController@destroy');
+Route::post('/myagenda/store', 'AgendaByPICController@store');
 
 
 Route::resource('download','DownloadController');

@@ -8,6 +8,7 @@
   <label class="col-sm-3 control-label ">Nilai 1</label>
     <div class="col-sm-2">
       <input type="text" class="form-control" name="nilai1" id="nilai1">
+      <input type="hidden" class="form-control" name="id" id="id">
     </div>
   <label class="col-sm-3 control-label ">Nilai 3</label>
     <div class="col-sm-2">

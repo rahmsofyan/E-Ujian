@@ -195,20 +195,27 @@ class agendabyPICController extends Controller
             for($i=0;$i<count($penilaian);$i++){
                 if(isset($dumpnilai[$i])==false)continue; 
                 $daftarnilai[$j][$i+2] = $dumpnilai[$i][$j]->nilai;
-<<<<<<< HEAD
             }   
         return view('myagenda.penilaian.tampilPenilaian', compact('daftarnilai', 'dosen', 'tanggals','penilaian'));
-=======
+
             }
         
-        $statusKehadiran = ['izin','alpha'];
-        return view('myagenda.tampilPenilaian', compact('daftarnilai', 'dosen', 'tanggals','penilaian'));
->>>>>>> master
-    }
+      
     
-    public function tambahpenilaian(Request $request)
+    public function updateNilai( Request $request)
     {
-       
+        $nilai = nilaimhs::findOrFail($request->id);
+
+        $nilai->nilai1 = $request->nilai1;
+        $nilai->nilai2 = $request->nilai2;
+        $nilai->nilai3 = $request->nilai3;
+        $nilai->nilai4 = $request->nilai4;
+        $jumlah = $request->nilai1 + $request->nilai2 + $request->nilai3 + $request->nilai4;
+        $nilai->nilai_rata = $jumlah/4;
+
+        $nilai->save();
+
+        return back();
     }
     public function UpdateStatusKehadiran(Request $request)
     {
