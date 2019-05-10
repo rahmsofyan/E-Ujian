@@ -74,6 +74,7 @@ Route::get('/myagenda', 'AgendaByPICController@index')->name('AgendaByPIC');
 Route::get('/myagenda/create', 'AgendaByPICController@create')->name('AgendaByPIC.add');
 Route::post('/myagenda/statuskehadiran', 'AgendaByPICController@UpdateStatusKehadiran')->name('AgendaByPIC.UpdateStatusKehadiran');
 Route::post('/myagenda/toleransikehadiran', 'AgendaByPICController@UpdateToleransiKehadiran')->name('AgendaByPIC.UpdateToleransiKehadiran');
+Route::post('/myagenda/jadwalkehadiran', 'AgendaByPICController@UpdateJadwalKehadiran')->name('AgendaByPIC.UpdateJadwalKehadiran');
 //-----------Agenda by PIC-->berita
 Route::get('/myagenda/berita/{idAgenda}', 'AgendaByPICController@berita')->name('AgendaByPIC.berita');
 Route::get('/myagenda/{idAgenda}', 'AgendaByPICController@tampilKehadiran')->name('AgendaByPIC.tampilKehadiran');

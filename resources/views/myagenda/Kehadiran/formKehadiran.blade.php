@@ -13,7 +13,7 @@
          <tbody>
          @foreach($kehadiran as $key => $row)
          <tr>
-           <form action="/AgendaByPIC/statuskehadiran" method="post">
+         <form action="{{route('AgendaByPIC.UpdateStatusKehadiran')}}" method="post">
             @csrf
            <td> {{ $key+1}}</td>
            <td name='nrp'> 

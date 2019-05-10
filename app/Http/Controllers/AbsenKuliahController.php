@@ -177,43 +177,42 @@ class AbsenKuliahController extends Controller
         $result = [];
         foreach ($arraydata as $key => $row) {
             if($key != 'p'.$index || $index>$until)continue;
-            echo '<td ';
+            echo '<td class="alert"><span ';
 
             
             if ($row =='izin') {
-                echo 'class="alert btn-primary"';
+                echo 'class="glyphicon glyphicon-italic" style="color:blue" ';
                 $result['p'.$index]['izin']=1;
                 
             }
-            elseif ($row==null && strtotime($tanggal[$index-1]->tglPertemuan) > strtotime(date('d-M-Y'))){
-                echo 'class="alert btn-light"';
+            elseif ($row=='special' || $row==null && strtotime($tanggal[$index-1]->tglPertemuan) > strtotime(date('d-M-Y'))){
+                echo 'class="glyphicon glyphicon-home" style="color:grey"';
                 $result['p'.$index]['special']=1;
             }
             elseif ($row == null ||  $row=='alpha') {
-                echo 'class="alert btn-danger"';
+                echo 'class="glyphicon glyphicon-remove" style="color:red"';
                 $result['p'.$index]['alpha']=1;
             }
             elseif((strtotime($row) - strtotime($masuk)) / 60 <= 0)
             {
-                echo "class='alert' style='background-color:rgb(0,200,0);'";
+                echo "class='glyphicon glyphicon-ok-sign' style='color:rgb(0,200,0);'";
                 $result['p'.$index]['ontime']=1;
             }
             elseif((strtotime($row) - strtotime($masuk)) / 60 >= 0  && (strtotime($row) - strtotime($masuk)) / 60 < $tolerance)
             {
-                
                 $perminutes = 255/$tolerance;
                 $color = (strtotime($row) - strtotime($masuk)) / 60 * $perminutes;
-                echo "class='alert' style='background-color:rgb($color,200,0);'";
+                echo "class='glyphicon glyphicon-ok-circle' style='color:rgb($color,200,0);'";
                 $result['p'.$index]['intolerance']=1;
             }
             elseif((strtotime($row) - strtotime($masuk)) / 60 > $tolerance)
             {
-                echo "class='alert' style='background-color:rgb(255,200,0);'";
+                echo "class='glyphicon glyphicon-exclamation-sign' style='color:rgb(255,200,0);'";
                 $result['p'.$index]['late']=1;
             }
             
             
-            echo '></td>';
+            echo '></span></td>';
             $index +=1;
         }
         return $result;
