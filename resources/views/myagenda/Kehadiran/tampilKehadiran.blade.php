@@ -51,12 +51,8 @@
 
         <div class="panel-body">
         <div class="table table-responsive">
-<<<<<<< HEAD:resources/views/myagenda/Kehadiran/tampilKehadiran.blade.php
          @include('myagenda.kehadiran.tabelKehadiran')
-=======
-         @include('myagenda.tabelKehadiran')
          <!---- modal-interval-->
->>>>>>> master:resources/views/myagenda/tampilKehadiran.blade.php
               <div id="modal-interval" class="modal inmodal fade" id="detailku" tabindex="-1" role="dialog"  aria-hidden="true">
                   <div class="modal-dialog modal-dialog-centered">
                       <div class="modal-content">
