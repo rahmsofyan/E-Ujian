@@ -28,8 +28,14 @@
           <button type="button" class="btn btn-second" data-toggle="modal" data-target="#modal-libur">Kelas Libur</button>
           <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-status">Opsi Status</button>
           <button form="A"  class="btn btn-primary" id="print"><li class="fa fa-print"></li>Print</button>
+        </div>   
+
+        <div class="row1", style="background: #ffff99">         
+          <a><i class="glyphicon glyphicon-ok-sign" style="color: green"></i> : masuk</a>
+          <a><i class="glyphicon glyphicon-italic" style="color: blue"></i> : izin</a>
+          <a><i class="glyphicon glyphicon-remove" style="color: red"></i> : tidak masuk</a>
+          <a><i class="glyphicon glyphicon-home" style="color: grey"></i> : libur</a>
         </div>
-        
       </div>
       <br>
        <div class="panel-heading" style="background-color: #013880;color: white;">
@@ -180,4 +186,17 @@
             window.print();
         })
       </script>
+
+<style>
+    
+.row1 {
+  position: absolute;
+  background: yellow;
+  overflow-x: hidden;
+  padding: 8px 8px;
+  border-radius: 5px;
+  right: 100px;
+}
+</style>
+
 @endsection
