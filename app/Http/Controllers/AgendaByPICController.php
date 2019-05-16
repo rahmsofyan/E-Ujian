@@ -146,7 +146,67 @@ class agendabyPICController extends Controller
             ->where('fk_idAgenda','=',$idAgenda)
              ->get();
 
-        return view('myagenda.penilaian.tampilPenilaian',compact('mhs','dosen','tanggals'));
+        $maxn1 =  DB::table('nilaimhs')->select('*')
+                    ->where('idAgenda','=',$idAgenda)
+                    ->max('nilai1');     
+
+        $maxn2 =  DB::table('nilaimhs')->select('*')
+                    ->where('idAgenda','=',$idAgenda)
+                    ->max('nilai2');
+
+        $maxn3 =  DB::table('nilaimhs')->select('*')
+                    ->where('idAgenda','=',$idAgenda)
+                    ->max('nilai3');
+
+        $maxn4 =  DB::table('nilaimhs')->select('*')
+                    ->where('idAgenda','=',$idAgenda)
+                    ->max('nilai4');
+
+        $maxnr =  DB::table('nilaimhs')->select('*')
+                    ->where('idAgenda','=',$idAgenda)
+                    ->max('nilai_rata');
+
+        $minn1 =  DB::table('nilaimhs')->select('*')
+                    ->where('idAgenda','=',$idAgenda)
+                    ->min('nilai1');     
+
+        $minn2 =  DB::table('nilaimhs')->select('*')
+                    ->where('idAgenda','=',$idAgenda)
+                    ->min('nilai2');
+
+        $minn3 =  DB::table('nilaimhs')->select('*')
+                    ->where('idAgenda','=',$idAgenda)
+                    ->min('nilai3');
+
+        $minn4 =  DB::table('nilaimhs')->select('*')
+                    ->where('idAgenda','=',$idAgenda)
+                    ->min('nilai4');
+
+        $minnr =  DB::table('nilaimhs')->select('*')
+                    ->where('idAgenda','=',$idAgenda)
+                    ->min('nilai_rata');
+        
+        $avgn1 =  DB::table('nilaimhs')->select('*')
+                    ->where('idAgenda','=',$idAgenda)
+                    ->avg('nilai1');     
+
+        $avgn2 =  DB::table('nilaimhs')->select('*')
+                    ->where('idAgenda','=',$idAgenda)
+                    ->avg('nilai2');
+
+        $avgn3 =  DB::table('nilaimhs')->select('*')
+                    ->where('idAgenda','=',$idAgenda)
+                    ->avg('nilai3');
+
+        $avgn4 =  DB::table('nilaimhs')->select('*')
+                    ->where('idAgenda','=',$idAgenda)
+                    ->avg('nilai4');
+
+        $avgnr =  DB::table('nilaimhs')->select('*')
+                    ->where('idAgenda','=',$idAgenda)
+                    ->avg('nilai_rata');
+
+        return view('myagenda.penilaian.tampilPenilaian',compact('mhs','dosen','tanggals','maxn1','maxn2','maxn3','maxn4','maxnr','minn1','minn2','minn3','minn4','minnr','avgn1','avgn2','avgn3','avgn4','avgnr'));
     }
 
     public function tampilNilai($idAgenda)
