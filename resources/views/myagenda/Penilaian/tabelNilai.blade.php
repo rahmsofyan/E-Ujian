@@ -48,6 +48,51 @@
             @endforeach
         
     </tbody>
-    
+
+    <tfoot>
+
+        <tr><td>#</td>
+            <td>Rekapitulasi Penilaian</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr> 
+
+        <tr align="center"><td></td><td></td>
+             <td align="left">Nilai Tertinggi</td>
+             <td>{{ $maxn1 }}</td>
+             <td>{{ $maxn2 }}</td>
+             <td>{{ $maxn3 }}</td>
+             <td>{{ $maxn4 }}</td>
+             <td>{{ $maxnr }}</td>    
+             <td></td>
+        </tr>
+ 
+        <tr align="center"><td></td><td></td>
+             <td align="left">Nilai Terendah</td>
+             <td>{{ $minn1 }}</td>
+             <td>{{ $minn2 }}</td>
+             <td>{{ $minn3 }}</td>
+             <td>{{ $minn4 }}</td>
+             <td>{{ $minnr }}</td>    
+             <td></td>
+        </tr>
+ 
+        <tr align="center"><td></td><td></td>
+             <td align="left">Rata-rata</td>
+             <td>{{ $avgn1 }}</td>
+             <td>{{ $avgn2 }}</td>
+             <td>{{ $avgn3 }}</td>
+             <td>{{ $avgn4 }}</td>
+             <td>{{ $avgnr }}</td>    
+             <td></td>
+        </tr>
+ 
+    </tfoot>
+
 </table>
 
