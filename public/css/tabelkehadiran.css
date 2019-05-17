@@ -1,0 +1,34 @@
+
+.icon-kehadiran
+{
+    font-size: 25px;
+}
+
+.ontime
+{
+    font-size: 25px;
+    color:rgb(75,200,75) !important;
+}
+
+.alpha
+{
+    font-size: 20px;
+    color:rgb(200,40,40) !important;
+}
+
+.izin
+{
+    font-size: 25px;
+    color:rgb(100,200,200) !important;
+}
+
+.tidak_ada
+{
+    color:rgb(200,200,200);
+}
+
+.late
+{
+    font-size: 25px;
+    color:rgb(255,200,75) !important;
+}

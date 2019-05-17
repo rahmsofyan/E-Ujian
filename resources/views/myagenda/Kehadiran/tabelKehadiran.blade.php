@@ -1,4 +1,4 @@
-<table class="table table-bordered table-striped table-hover" id="tableagen" style="width:100%">
+<table class="table table-bordered table-striped table-hover " id="tableagen" style="width:100%">
     <thead> 
         <tr> 
             <th>#</th>
@@ -19,25 +19,25 @@
             <td> {{ $row['nrp']}}</td>
             <td colspan="3"> {{ $row['nama'] }}</td>
             @foreach ($row['pertemuan']['kehadiran'] as $key2 => $pertemuan)
-                <td class="tabelkehadiran"><span 
+                <td class="icon-kehadiran"><span 
                      @switch($pertemuan['status'])
-                        @case('izin')
-                            id='{{$pertemuan['status']}}' val={{$pertemuan['value']}} class="glyphicon glyphicon-italic " style="color:blue"
+                        @case('Izin')
+                            id='{{$pertemuan['status']}}' val={{$pertemuan['value']}} class="glyphicon glyphicon-info-sign izin" 
                             @break
-                        @case('special')
-                            id='{{$pertemuan['status']}}' val={{$pertemuan['value']}} class="glyphicon glyphicon-home" style="color:grey"
+                        @case('Tidak Ada Kelas')
+                            id='{{$pertemuan['status']}}' val={{$pertemuan['value']}} class="glyphicon glyphicon-minus tidak_ada" 
                             @break
-                        @case('ontime')
-                            id='{{$pertemuan['status']}}' val={{$pertemuan['value']}} class='glyphicon glyphicon-ok-sign' style='color:rgb(0,200,0)'
+                        @case('Tepat Waktu')
+                            id='{{$pertemuan['status']}}' val={{$pertemuan['value']}} class='glyphicon glyphicon-ok ontime'
                             @break
-                        @case('alpha')
-                            id='{{$pertemuan['status']}}' val={{$pertemuan['value']}} class="glyphicon glyphicon-remove" style="color:red"
+                        @case('Alpha')
+                            id='{{$pertemuan['status']}}' val={{$pertemuan['value']}} class="glyphicon glyphicon-remove alpha"
                             @break
-                        @case('intolerance')
-                            id='{{$pertemuan['status']}}' val={{$pertemuan['value']}} class='glyphicon glyphicon-ok-circle' style='color:rgb($color,200,0)'
+                        @case('Dalam Toleransi')
+                            id='{{$pertemuan['status']}}' val={{$pertemuan['value']}} class='glyphicon glyphicon-ok-circle intolerance'
                             @break
-                        @case('late')
-                            id='{{$pertemuan['status']}}' val={{$pertemuan['value']}} class='glyphicon glyphicon-exclamation-sign' style='color:rgb(255,200,0);'
+                        @case('Terlambat')
+                            id='{{$pertemuan['status']}}' val={{$pertemuan['value']}} class='glyphicon glyphicon-exclamation-sign late'
                             @break
                         @default
                     @endswitch
@@ -65,5 +65,12 @@
         </tr>
     <tr><td colspan='{{$jmlPertemuan}}'></td></tr>
     @endforeach
-    
    </table>
+   <script>
+       $( ".intolerance" ).each(function() {
+            let val = parseInt($( this ).attr('val')) +75;
+            if(val>255)val=255;
+            this.style.color = "rgb("+val+",200,75)";
+            console.log($(this).style);
+        });
+    </script>

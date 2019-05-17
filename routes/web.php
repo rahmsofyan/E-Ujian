@@ -66,25 +66,26 @@ Route::get('/absenKuliah/{idAgenda}', 'AbsenKuliahController@tampilKehadiran')->
 Route::post('/absenKuliah/store', 'AbsenKuliahController@store');
 Route::get('/absenKuliah/{idAbsen}/edit', 'AbsenKuliahController@edit')->name('absenKuliah.edit');
 Route::post('/absenKuliah/{idAbsen}', 'AbsenKuliahController@update')->name('absenKuliah.update');
-Route::get('/absenKuliah/delete/{idAbsen}', 'AbsenKuliahController@destroy');
+//Route::get('/absenKuliah/delete/{idAbsen}', 'AbsenKuliahController@destroy');
 //-----------------------------------------------------------------------------------
 
 //-----------Agenda by PIC
 Route::get('/myagenda', 'AgendaByPICController@index')->name('AgendaByPIC');
-Route::get('/myagenda/create', 'AgendaByPICController@create')->name('AgendaByPIC.add');
+Route::get('/myagenda/{idAgenda}', 'AgendaByPICController@tampilKehadiran')->name('AgendaByPIC.tampilKehadiran');
+Route::get('/myagenda/{idAgenda}/absen', 'AgendaByPICController@tampilKehadiran')->name('AgendaByPIC.tampilKehadiran');
+
+//------------Agenda by PIC status Kehadiran 
 Route::post('/myagenda/statuskehadiran', 'AgendaByPICController@UpdateStatusKehadiran')->name('AgendaByPIC.UpdateStatusKehadiran');
 Route::post('/myagenda/toleransikehadiran', 'AgendaByPICController@UpdateToleransiKehadiran')->name('AgendaByPIC.UpdateToleransiKehadiran');
 Route::post('/myagenda/jadwalkehadiran', 'AgendaByPICController@UpdateJadwalKehadiran')->name('AgendaByPIC.UpdateJadwalKehadiran');
 //-----------Agenda by PIC-->berita
+Route::get('/myagenda/create', 'AgendaByPICController@create')->name('AgendaByPIC.add');
 Route::get('/myagenda/berita/{idAgenda}', 'AgendaByPICController@berita')->name('AgendaByPIC.berita');
-Route::get('/myagenda/{idAgenda}', 'AgendaByPICController@tampilKehadiran')->name('AgendaByPIC.tampilKehadiran');
-//-----------Agenda by PIC Penilaian
 
+//-----------Agenda by PIC-->Penilaian
 Route::get('/myagenda/penilaian/{idAgenda}', 'AgendaByPICController@detailNilai')->name('AgendaByPIC.tampilNilai');
 Route::post('/myagenda/penilaian/update', 'AgendaByPICController@updateNilai')->name('AgendaByPIC.updateNilai');
-
-
-//undefined route??
+//-------------Agenda by PIC ->berita acara
 Route::get('/myagenda/{idAbsen}/edit', 'AgendaByPICController@edit')->name('AgendaByPIC.edit');
 Route::post('/myagenda/{idAbsen}', 'AgendaByPICController@update')->name('AgendaByPIC.update');
 Route::get('/myagenda/delete/{idAbsen}', 'AgendaByPICController@destroy');
