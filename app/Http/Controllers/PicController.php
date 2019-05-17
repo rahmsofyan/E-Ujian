@@ -47,9 +47,20 @@ class PicController extends Controller
 
     public function store(Request $request)
     {
-        //
-       pic::create($request->all());
-       return redirect('/pic');
+        
+
+        $request->validate([
+            'idUser' => 'required|unique:pic|max:255',
+            'idPIC' => 'required|unique:pic|max:255',
+            'keterangan' => 'required',
+        ]);
+        
+        if (pic::where('idUser', '=', $request->idUser)->exists()) {
+            return redirect()->back()->withErrors($request->idUser);
+        }
+        else
+        pic::create($request->all());
+        return redirect('/pic');
 
     }
 
