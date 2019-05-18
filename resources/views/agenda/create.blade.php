@@ -58,7 +58,7 @@
        <div class="form-group">
           <label class="control-label col-sm-2">Toleransi</label>
           <div class="col-sm-10">
-            <input type="number" class="form-control" id="toleransi" placeholder="15" name="toleransiKeterlambatan">
+            <input type="number" class="form-control" id="toleransi" value=15 name="toleransiKeterlambatan">
           </div>
        </div> 
 

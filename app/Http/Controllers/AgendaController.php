@@ -49,7 +49,6 @@ class AgendaController extends Controller
         
       agenda::create($request->all());
        // membuat 16 berita acara default
-       dd('masuk');
        for($i=0; $i< 16; $i++){
         $yuhu = 7 * $i;
         // dd($request->tanggal); "2019-01-29"
