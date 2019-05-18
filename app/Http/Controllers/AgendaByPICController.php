@@ -346,6 +346,44 @@ class agendabyPICController extends Controller
         return ["kehadiran"=>$result,"rekapitulasi"=>$total];
     }
 
+    public function upPorsi($fk_idAgenda)
+    {
+        $data['portion'] = portion::where('fk_idAgenda',$fk_idAgenda)->first();
+        $data['agenda'] = agenda::findorfail($fk_idAgenda);
+
+       
+        return view('myagenda.updatePortion',$data);
+    }
+
+   public function updatePorsi(Request $request, $id){
+        
+        $porsi = portion::where('fk_idAgenda', $id)->first();
+
+        if($porsi){
+            $porsi->porsi1 = $request->porsi1;
+            $porsi->porsi2 = $request->porsi2;
+            $porsi->porsi3 = $request->porsi3;
+            $porsi->porsi4 = $request->porsi4;
+            $porsi->total  = $porsi->porsi1+$porsi->porsi2+$porsi->porsi3+$porsi->porsi4;
+            $porsi->save();
+        } else{
+            $total = $request->porsi1+$request->porsi2+$request->porsi3+$request->porsi4;
+
+            $porsi = portion::create([
+                'fk_idAgenda' => $id,
+                'porsi1' => $request->porsi1,
+                'porsi2' => $request->porsi2,
+                'porsi3' => $request->porsi3,
+                'porsi4' => $request->porsi4,
+                'total' => $total,
+            ]);
+        }
+     
+        return redirect()->route('AgendaByPIC');
+
+    }
+    
+
     public function DownloadLaporan($id)
     {
         $pdf = PDF::loadView('myagenda.penilaian.tampilPenilaian',compact('mhs','dosen','tanggals','maxn1','maxn2','maxn3','maxn4','maxnr','minn1','minn2','minn3','minn4','minnr','avgn1','avgn2','avgn3','avgn4','avgnr'));

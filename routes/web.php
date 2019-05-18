@@ -91,6 +91,13 @@ Route::post('/myagenda/{idAbsen}', 'AgendaByPICController@update')->name('Agenda
 Route::get('/myagenda/delete/{idAbsen}', 'AgendaByPICController@destroy');
 Route::post('/myagenda/store', 'AgendaByPICController@store');
 
+//----------Agenda by PIC ->Porsi
+Route::post('/porsi/store', 'AgendaByPICController@storePorsi')->name('AgendaByPICController.storePorsi');
+
+Route::post('/porsi/update/{id}', 'AgendaByPICController@updatePorsi')->name('AgendaByPICController.updatePorsi');
+
+Route::get('/porsi/up/{id}', 'AgendaByPICController@upPorsi')->name('AgendaByPICController.upPorsi');
+
 
 Route::resource('download','DownloadController');
 
