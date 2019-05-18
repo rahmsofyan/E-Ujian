@@ -1,4 +1,3 @@
-<?php use \App\Http\Controllers\AbsenKuliahController;?>
 @extends('layouts.main')
 
 @section('title')
@@ -6,6 +5,7 @@
 @endsection
 
 @section('contents')
+<link href="{{ asset('css/tabelkehadiran.css') }}" rel="stylesheet">
 <!-- Modal -->
 <div id="page-wrapper">
    <div class="row">

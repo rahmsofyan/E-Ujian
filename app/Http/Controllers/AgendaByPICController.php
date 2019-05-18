@@ -17,26 +17,23 @@ use App\Http\Controllers\Controller;
 
 class agendabyPICController extends Controller
 {
-    var $k;
+    
     public function __construct()
     {
         $this->middleware('auth');
-    }
-
-    public function agendabyPIC($idPIC)
-    {
-        if($idPIC!==null)
-        {
-            return $AllAgendaByPIC = agenda::where('fk_idPIC',$idPIC)->get();
-        }
-        else return [];
+        $this->JmlPertemuan = 16;
+        $this->StatusKehadiran = [] ;
+        $this->StatusKehadiran['Hadir'] = ['Tepat Waktu','Dalam Toleransi','Terlambat'];
+        $this->StatusKehadiran['Tidak Hadir'] =['Alpha','Tidak Ada Kelas','Izin'];
+        
     }
 
     public function index()
     {
-
-        $idPIC = \Auth::user()->getPIC()->idPIC;
-
+        if(is_null($idPIC = \Auth::user()->getPIC()))return abort(404);
+        
+        $idPIC = $idPIC = \Auth::user()->getPIC()->idPIC;
+        
         $listAgenda = DB::table('agenda')
         ->join('pic', 'agenda.fk_idPIC', '=', 'pic.idPIC')
         ->select('agenda.idAgenda', 'agenda.namaAgenda', 'pic.namaPIC')
@@ -87,7 +84,7 @@ class agendabyPICController extends Controller
 
     public function destroy(absenKuliah $absenKuliah)
     {
-        //
+        
         $a = absenKuliah::findorfail($id);
         $a->delete();
         return redirect('/myagenda');
@@ -96,14 +93,16 @@ class agendabyPICController extends Controller
 
     public function berita($idAgenda)
     {
+        $this->cek_pic($idAgenda);
         //$a=absenKuliah::all()->where('absenKuliah.fk_idAgenda', '=', $idAgenda);
         $a = DB::table('absenKuliah')->where('fk_idAgenda', '=', $idAgenda)->orderBy('tglPertemuan', 'asc')->get();
         return view('myagenda.berita.index',compact('a'));
     }
 
+    
     public function tampilKehadiran($idAgenda)
     {
-        // $wkwks = DB::select('select * from kehadiran INNER JOIN users ON kehadiran.idUser = users.idUser where kehadiran.idAgenda = ?;', array($idAgenda));
+        $this->cek_pic($idAgenda);
         DB::statement('call Cek()');
 
         $kehadiran = DB::table('kehadiranv2')
@@ -112,26 +111,54 @@ class agendabyPICController extends Controller
                     ->select('kehadiranv2.*', 'users.name')
                     ->where('kehadiranv2.idAgenda', '=', $idAgenda)
                     ->get();
-//        dd($kehadiran);
 
         $dosen = DB::table('agenda')
                     ->join('pic', 'agenda.fk_idPIC', '=', 'pic.idPIC')
                     ->select('pic.namaPIC', 'agenda.namaAgenda','agenda.WaktuMulai','agenda.idAgenda','agenda.toleransiKeterlambatan')
                     ->where('agenda.idAgenda', '=', $idAgenda)
                     ->get()->first();
-        //dd($dosen);
-
+        
         $tanggals = DB::table('absenKuliah')
                     ->select('tglPertemuan')
                     ->orderBy('tglPertemuan','asc')
                     ->where('fk_idAgenda','=',$idAgenda)
                     ->get();
-
+        $this->JmlPertemuan = count($tanggals);
+        $FilterKehadiranMahasiswa = [];
+        $Rekapitulasi = $this->GetRekapitulasiModel($this->JmlPertemuan);
+    
+        foreach ($kehadiran as $key => $row) {
+            
+            $FilterKehadiranMahasiswa[$key]=['nrp'=>$row->idUser];
+            $FilterKehadiranMahasiswa[$key]['nama'] = $row->name;
+            $FilterKehadiranMahasiswa[$key]['pertemuan'] =  $this->filterhadir($tanggals,$row,$dosen->WaktuMulai,$this->JmlPertemuan,$dosen->toleransiKeterlambatan);
+            
+            
+            for($i = 1;$i<=$this->JmlPertemuan;$i++)
+            {
+                $Status = $FilterKehadiranMahasiswa[$key]['pertemuan']['kehadiran']['p'.$i]['status'];
+                
+                if(in_array($Status,$this->StatusKehadiran['Tidak Hadir'])){
+                    $Rekapitulasi['Tidak Hadir'][$Status]['p'.$i] += 1;
+                    $Rekapitulasi['Tidak Hadir']['Total']['p'.$i] +=1;
+                }else{
+                    $Rekapitulasi['Hadir'][$Status]['p'.$i] += 1;
+                    $Rekapitulasi['Hadir']['Total']['p'.$i] +=1;
+                }
+              
+            }
+            
+        }
+        #dd($Rekapitulasi);
+        #dd($FilterKehadiranMahasiswa);
+        
         $statusKehadiran = ['izin','alpha'];
-        return view('myagenda.kehadiran.tampilKehadiran', compact('kehadiran', 'dosen', 'tanggals','statusKehadiran'));
+        
+        return view('myagenda.kehadiran.tampilKehadiran', compact('Rekapitulasi','kehadiran','FilterKehadiranMahasiswa', 'dosen', 'tanggals','statusKehadiran'));
     }
 
     public function detailNilai($idAgenda){
+        $this->cek_pic($idAgenda);
         $mhs = nilaiMhs::where('idAgenda',$idAgenda)->get();
         $dosen = DB::table('agenda')
         ->join('pic', 'agenda.fk_idPIC', '=', 'pic.idPIC')
@@ -208,61 +235,8 @@ class agendabyPICController extends Controller
 
         return view('myagenda.penilaian.tampilPenilaian',compact('mhs','dosen','tanggals','maxn1','maxn2','maxn3','maxn4','maxnr','minn1','minn2','minn3','minn4','minnr','avgn1','avgn2','avgn3','avgn4','avgnr'));
     }
-
-    public function tampilNilai($idAgenda)
-    {
-        $kehadiran = DB::table('kehadiranv2')
-                    ->join('users', 'kehadiranv2.idUser', '=', 'users.idUser')
-                    ->leftjoin('pic', 'kehadiranv2.idUser', '=', 'pic.idPIC')
-                    ->select('kehadiranv2.*', 'users.name')
-                    ->where('kehadiranv2.idAgenda', '=', $idAgenda)
-                    ->get();
-
-        $dosen = DB::table('agenda')
-        ->join('pic', 'agenda.fk_idPIC', '=', 'pic.idPIC')
-        ->select('pic.namaPIC', 'agenda.namaAgenda','agenda.WaktuMulai','agenda.idAgenda','agenda.toleransiKeterlambatan')
-        ->where('agenda.idAgenda', '=', $idAgenda)
-        ->get()->first();
-        
-        
-        $tanggals = DB::table('absenKuliah')
-           ->select('tglPertemuan')
-            ->orderBy('tglPertemuan','asc')
-            ->where('fk_idAgenda','=',$idAgenda)
-             ->get();
-
-        $idAgenda = $dosen->idAgenda;
-
-        $penilaian = penilaian::where('idAgenda','=',$idAgenda)
-                    ->get();
-        
-        $dumpnilai = collect();
-        foreach ($penilaian as $key => $item) {
-            $dumpnilai[$key] = daftarnilai::
-                                   join('users', 'daftarnilai.idUser', '=', 'users.idUser')
-                                   ->where('idPenilaian','=',$item->idPenilaian)
-                                   ->select('daftarnilai.idPenilaian','daftarnilai.nilai', 'users.idUser','users.name')
-                                   ->get();
-        }
-
-        $daftarnilai = [];
-        foreach ($kehadiran as $key => $row) {
-            $daftarnilai[$key][0] =$row->idUser;
-            $daftarnilai[$key][1] = $row->name;
-        }
-        //dd($penilaian);
-        for($j=0;isset($daftarnilai) && $j<count($daftarnilai);$j++)
-            for($i=0;$i<count($penilaian);$i++){
-                if(isset($dumpnilai[$i])==false)continue; 
-                $daftarnilai[$j][$i+2] = $dumpnilai[$i][$j]->nilai;
-            }   
-        return view('myagenda.penilaian.tampilPenilaian', compact('daftarnilai', 'dosen', 'tanggals','penilaian'));
-
-            }
-        
-      
     
-    public function updateNilai( Request $request)
+    public function updateNilai(Request $request)
     {
         $nilai = nilaimhs::findOrFail($request->id);
 
@@ -298,50 +272,101 @@ class agendabyPICController extends Controller
                     ->update([$request->p=>'special']);
         return redirect()->back();
     }
+    
+    public function GetRekapitulasiModel($JmlPertemuan){
+        $Rekapitulasi = [];
+        
+        for($i = 1;$i<=$JmlPertemuan;$i++){
+            foreach($this->StatusKehadiran as $key => $pack){
+                foreach($pack as $item){
+                    $Rekapitulasi[$key][$item]['p'.$i] =0;
+                }
+                    $Rekapitulasi[$key]['Total']['p'.$i] =0;
+            }
+        }
+        return $Rekapitulasi;
+    }
 
-    public static function filterhadir($tanggal,$arraydata,$masuk,$until,$tolerance) {
+    public function Filterhadir($tanggal,$arraydata,$masuk,$until,$tolerance) {
         $index = 1;
         $result = [];
+        $color_pass = 180/($tolerance+0.1);
+        $total = [];
+        foreach($this->StatusKehadiran as $key => $pack){
+            foreach($pack as $item){
+                $total[$key][$item] =0;
+            }
+        }
+        
+        
         foreach ($arraydata as $key => $row) {
-            if($key != 'p'.$index || $index>$until)continue;
-            echo '<td class="alert"><span ';
+            if($index>$until)continue;
 
             
             if ($row =='izin') {
-                echo 'class="glyphicon glyphicon-italic" style="color:blue" ';
-                $result['p'.$index]['izin']=1;
+                $result['p'.$index]['status']='Izin';
+                $result['p'.$index]['value']=0;
+                $total['Tidak Hadir']['Izin'] +=1;
                 
             }
             elseif ($row=='special' || $row==null && strtotime($tanggal[$index-1]->tglPertemuan) > strtotime(date('d-M-Y'))){
-                echo 'class="glyphicon glyphicon-home" style="color:grey" ';
-                $result['p'.$index]['special']=1;
+                $result['p'.$index]['status']='Tidak Ada Kelas';
+                $result['p'.$index]['value']=0;
+                $total['Tidak Hadir']['Tidak Ada Kelas'] +=1;
             }
             elseif ($row == null ||  $row=='alpha') {
-                echo 'class="glyphicon glyphicon-remove" style="color:red"';
-                $result['p'.$index]['alpha']=1;
+                
+                $result['p'.$index]['status']='Alpha';
+                $result['p'.$index]['value']=0;
+                $total['Tidak Hadir']['Alpha'] +=1;
             }
             elseif((strtotime($row) - strtotime($masuk)) / 60 <= 0)
             {
-                echo "class='glyphicon glyphicon-ok-sign' style='color:rgb(0,200,0);'";
-                $result['p'.$index]['ontime']=1;
+                $result['p'.$index]['status']='Tepat Waktu';
+                $result['p'.$index]['value']=0;
+                $total['Hadir']['Tepat Waktu'] +=1;
             }
-            elseif((strtotime($row) - strtotime($masuk)) / 60 >= 0  && (strtotime($row) - strtotime($masuk)) / 60 < $tolerance)
+            elseif( (strtotime($row) - strtotime($masuk)) / 60 > 0  && (strtotime($row) - strtotime($masuk)) / 60 <= $tolerance)
             {
-                $perminutes = 255/$tolerance;
-                $color = (strtotime($row) - strtotime($masuk)) / 60 * $perminutes;
-                echo "class='glyphicon glyphicon-ok-circle' style='color:rgb($color,200,0);'";
-                $result['p'.$index]['intolerance']=1;
+                
+                $result['p'.$index]['status']='Dalam Toleransi';
+                $result['p'.$index]['value']= $color_pass*(strtotime($row) - strtotime($masuk))/60;
+                $total['Hadir']['Dalam Toleransi'] +=1;
             }
             elseif((strtotime($row) - strtotime($masuk)) / 60 > $tolerance)
             {
-                echo "class='glyphicon glyphicon-exclamation-sign' style='color:rgb(255,200,0);'";
+                $result['p'.$index]['status']='Terlambat';
+                $result['p'.$index]['value']= (strtotime($row) - strtotime($masuk))/60;
                 $result['p'.$index]['late']=1;
+                $total['Hadir']['Terlambat'] +=1;
             }
-            
-            
-            echo '></span></td>';
             $index +=1;
         }
-        return $result;
+        
+        return ["kehadiran"=>$result,"rekapitulasi"=>$total];
+    }
+
+    public function DownloadLaporan($id)
+    {
+        $pdf = PDF::loadView('myagenda.penilaian.tampilPenilaian',compact('mhs','dosen','tanggals','maxn1','maxn2','maxn3','maxn4','maxnr','minn1','minn2','minn3','minn4','minnr','avgn1','avgn2','avgn3','avgn4','avgnr'));
+		return $pdf->download('invoice.pdf');
+    }
+
+    public function cek_pic($idAgenda)
+    {
+        if(is_null(\Auth::user()->getPIC())){
+            return abort(404);
+        }else{
+            $idPIC = \Auth::user()->getPIC()->idPIC;
+            $Agenda = DB::table('agenda')
+                            ->where('agenda.idAgenda','=',$idAgenda)
+                            ->where('agenda.fk_idPIC','=',$idPIC)->exists();
+            if($Agenda)
+            return;
+            else
+            abort(404);
+        }
+        
+        
     }
 }

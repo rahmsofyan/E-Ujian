@@ -1,7 +1,8 @@
 @extends('layouts.main')
 
 @section('title')
-	PIC - Menambah Data Person In Charge
+   PIC - Menambah Data Person In Charge   
+   
 @endsection
 
 @section('contents')
@@ -12,6 +13,23 @@
        	<i class="fa fa-user fa-fw"></i><b>Tambah PIC</b>
         </div>
    <div class="panel-body border border-primary">
+   @if($errors->any())
+      @if($errors->has('idUser'))
+      <div class="alert alert-danger">
+            <strong>User telah memiliki PIC</strong>
+      </div>
+      @endif
+      @if($errors->has('idPIC'))
+      <div class="alert alert-danger">
+            <strong>ID PIC telah diambil</strong>
+      </div>
+      @endif
+      @if($errors->has('keterangan'))
+      <div class="alert alert-danger">
+            <strong>Keterangan tidak boleh kosong</strong>
+      </div>
+      @endif
+   @endif
    <form class="form-horizontal" action="/pic/store" method="POST" >
     @csrf
     <div class="form-group">
