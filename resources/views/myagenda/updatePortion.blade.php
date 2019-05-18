@@ -32,36 +32,36 @@
          </div>
        </div>
 
-<div class="form-group">
-  <label class="col-sm-3 control-label ">Porsi Nilai 1</label>
-    <div class="col-sm-2"  id="porsi1-container">
-      <input type="text" value="{{@$portion->porsi1}}" class="form-control" name="porsi1" id="porsi1" >
-    </div>
+  <div class="form-group">
+    <label class="col-sm-3 control-label ">Porsi Nilai 1</label>
+      <div class="col-sm-2"  id="porsi1-container">
+        <input type="text" value="{{@$portion->porsi1}}" class="form-control" name="porsi1" id="porsi1" >
+      </div>
 
-  <label class="col-sm-3 control-label ">Porsi Nilai 3</label>
-    <div class="col-sm-2"  id="porsi3-container">
-      <input type="text" value="{{@$portion->porsi2}}" class="form-control" name="porsi3" id="porsi3">
-    </div>
-</div>
-
-<div class="form-group">
-  <label class="col-sm-3 control-label ">Porsi Nilai 2</label>
-    <div class="col-sm-2"  id="porsi2-container">
-      <input type="text" value="{{@$portion->porsi3}}" class="form-control" name="porsi2" id="porsi2">
-    </div>
-  
-  <label class="col-sm-3 control-label ">Porsi Nilai 4</label>
-    <div class="col-sm-2"  id="porsi4-container">
-      <input type="text" value="{{@$portion->porsi4}}" class="form-control" name="porsi4" id="porsi4">
-    </div>
-</div>
-
-
-<div class="form-group">        
-  <div class="col-sm-offset-2 col-sm-10" id="porsi5-container">
-    <button type="submit" class="btn btn-primary">Update</button>
+    <label class="col-sm-3 control-label ">Porsi Nilai 3</label>
+      <div class="col-sm-2"  id="porsi3-container">
+        <input type="text" value="{{@$portion->porsi2}}" class="form-control" name="porsi3" id="porsi3">
+      </div>
   </div>
-</div>
+
+  <div class="form-group">
+    <label class="col-sm-3 control-label ">Porsi Nilai 2</label>
+      <div class="col-sm-2"  id="porsi2-container">
+        <input type="text" value="{{@$portion->porsi3}}" class="form-control" name="porsi2" id="porsi2">
+      </div>
+    
+    <label class="col-sm-3 control-label ">Porsi Nilai 4</label>
+      <div class="col-sm-2"  id="porsi4-container">
+        <input type="text" value="{{@$portion->porsi4}}" class="form-control" name="porsi4" id="porsi4">
+      </div>
+  </div>
+
+
+  <div class="form-group">        
+    <div class="col-sm-offset-2 col-sm-10" id="porsi5-container">
+      <button type="submit" class="btn btn-primary">Update</button>
+    </div>
+  </div>
 
       </form>
     </div>

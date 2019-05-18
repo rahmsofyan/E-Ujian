@@ -72,11 +72,13 @@
             let val = parseInt($( this ).attr('val')) +75;
             if(val>255)val=255;
             this.style.color = "rgb("+val+",200,75)";
+            console.log($(this).style);
         });
 
         $( ".late" ).each(function() {
-            let val = 255 - parseInt($( this ).attr('val'));
-            if(val<60)val=60;
+            let val = 200 - parseInt($( this ).attr('val'));
+            if(val<100)val=100;
             this.style.color = "rgb(255,"+val+",50)";
+            console.log($(this).style);
         });
     </script>

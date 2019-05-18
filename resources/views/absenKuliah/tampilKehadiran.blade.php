@@ -24,7 +24,12 @@
       <div class="row">
         <a href="{{ route('absenKuliah') }}" class="btn btn-danger" style="margin: 0px 5px">Kembali</a>
         <div class="btn-btn-group">
-          <button form="A"  class="btn btn-primary" id="print"><li class="fa fa-print"></li>Print</button>
+            <a href="/laporan/kehadiran/{{$idAgenda}}"  target="_blank">
+              <button form="button" class="btn btn-primary" ><li class="fa fa-print"></li>Print</button>
+            </a>
+            <button type="button" class="btn btn-grey" data-toggle="modal" data-target="#ModalLegenda">
+                Legenda
+            </button>
         </div>
         
       </div>
@@ -36,7 +41,7 @@
           
         </b>
        </div>
-
+       
        <div class="row" style="margin: 10px 0px;">
         <div>
           <?php $jmlPertemuan = 1; ?>
@@ -45,37 +50,14 @@
             @endforeach
         </div>
       </div>
-
         <div class="panel-body">
+            @include('layouts.legenda')
         <div class="table table-responsive">
          @include('absenKuliah.tabelKehadiran')
-              
-
           </div>
           </div>
         </div>
       </div>
 </div>
 
-
-<script>
-        document.getElementById("print").addEventListener("click",function(){
-            var css = '@page { size: landscape; }',
-            head = document.head || document.getElementsByTagName('head')[0],
-            style = document.createElement('style');
-
-            style.type = 'text/css';
-            style.media = 'print';
-
-            if (style.styleSheet){
-              style.styleSheet.cssText = css;
-            } else {
-              style.appendChild(document.createTextNode(css));
-            }
-
-            head.appendChild(style);
-
-            window.print();
-        })
-      </script>
 @endsection

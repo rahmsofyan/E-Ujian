@@ -9,11 +9,11 @@ use Illuminate\Http\Request;
 use PDF;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\AgendabyPICController;
 
 class AbsenKuliahController extends Controller
 {
-    
-    var $k;
+
     public function __construct()
     {
         $this->middleware('auth');
@@ -57,125 +57,13 @@ class AbsenKuliahController extends Controller
                     ->where('fk_idAgenda','=',$idAgenda)
                     ->get();
 
-        $FilterKehadiranMahasiswa = [];
-        $this->JmlPertemuan = count($tanggals);
-        $Rekapitulasi = $this->GetRekapitulasiModel($this->JmlPertemuan);
-        
-        foreach ($kehadiran as $key => $row) {
-            
-            $FilterKehadiranMahasiswa[$key]=['nrp'=>$row->idUser];
-            $FilterKehadiranMahasiswa[$key]['nama'] = $row->name;
-            $FilterKehadiranMahasiswa[$key]['pertemuan'] =  $this->filterhadir($tanggals,$row,$dosen->WaktuMulai,$this->JmlPertemuan,$dosen->toleransiKeterlambatan);
-            
-            
-            for($i = 1;$i<=$this->JmlPertemuan;$i++)
-            {
-                $Status = $FilterKehadiranMahasiswa[$key]['pertemuan']['kehadiran']['p'.$i]['status'];
-                
-                if(in_array($Status,$this->StatusKehadiran['Tidak Hadir'])){
-                    $Rekapitulasi['Tidak Hadir'][$Status]['p'.$i] += 1;
-                    $Rekapitulasi['Tidak Hadir']['Total']['p'.$i] +=1;
-                }else{
-                    $Rekapitulasi['Hadir'][$Status]['p'.$i] += 1;
-                    $Rekapitulasi['Hadir']['Total']['p'.$i] +=1;
-                }
-              
-            }
-            
-        }
-        
-        $statusKehadiran = ['izin','alpha'];
-        
-        return view('absenkuliah.tampilKehadiran', compact('Rekapitulasi','kehadiran','FilterKehadiranMahasiswa', 'dosen', 'tanggals','statusKehadiran'));
-    }
-    
+       
+        $Rekapitulasi = AgendabyPICController::RekapitulasiKehadiran($kehadiran,$tanggals,$dosen,$this->StatusKehadiran);
+        $FilterKehadiranMahasiswa = $Rekapitulasi['RekapitulasiMahasiswa'];
+        $Rekapitulasi = $Rekapitulasi['RekapitulasiTotal'];
 
-    public function UpdateStatusKehadiran(Request $request)
-    {
-        kehadiran::where('idUser',$request->nrp)
-                ->where('idAgenda',$request->idAgenda)
-                    ->update([$request->p => $request->status]);
-        return redirect()->back();
+        return view('absenkuliah.tampilKehadiran', compact('Rekapitulasi','kehadiran','FilterKehadiranMahasiswa', 'dosen', 'tanggals','idAgenda'));
     }
 
-    public function UpdateToleransiKehadiran(Request $request)
-    {
-        $tes = agenda::where('idAgenda',$request->idAgenda)
-                ->update(['toleransiKeterlambatan' => $request->toleransi]);
-        return redirect()->back();
-    }
-
-    public function GetRekapitulasiModel($JmlPertemuan){
-        $Rekapitulasi = [];
-        
-        for($i = 1;$i<=$JmlPertemuan;$i++){
-            foreach($this->StatusKehadiran as $key => $pack){
-                foreach($pack as $item){
-                    $Rekapitulasi[$key][$item]['p'.$i] =0;
-                }
-                    $Rekapitulasi[$key]['Total']['p'.$i] =0;
-            }
-        }
-        return $Rekapitulasi;
-    }
-
-    public function Filterhadir($tanggal,$arraydata,$masuk,$until,$tolerance) {
-        $index = 1;
-        $result = [];
-        $color_pass = 180/($tolerance+0.1);
-        $total = [];
-        foreach($this->StatusKehadiran as $key => $pack){
-            foreach($pack as $item){
-                $total[$key][$item] =0;
-            }
-        }
-        
-        
-        foreach ($arraydata as $key => $row) {
-            if($index>$until)continue;
-
-            
-            if ($row =='izin') {
-                $result['p'.$index]['status']='Izin';
-                $result['p'.$index]['value']=0;
-                $total['Tidak Hadir']['Izin'] +=1;
-                
-            }
-            elseif ($row=='special' || $row==null && strtotime($tanggal[$index-1]->tglPertemuan) > strtotime(date('d-M-Y'))){
-                $result['p'.$index]['status']='Tidak Ada Kelas';
-                $result['p'.$index]['value']=0;
-                $total['Tidak Hadir']['Tidak Ada Kelas'] +=1;
-            }
-            elseif ($row == null ||  $row=='alpha') {
-                
-                $result['p'.$index]['status']='Alpha';
-                $result['p'.$index]['value']=0;
-                $total['Tidak Hadir']['Alpha'] +=1;
-            }
-            elseif((strtotime($row) - strtotime($masuk)) / 60 <= 0)
-            {
-                $result['p'.$index]['status']='Tepat Waktu';
-                $result['p'.$index]['value']=0;
-                $total['Hadir']['Tepat Waktu'] +=1;
-            }
-            elseif( (strtotime($row) - strtotime($masuk)) / 60 > 0  && (strtotime($row) - strtotime($masuk)) / 60 <= $tolerance)
-            {
-                
-                $result['p'.$index]['status']='Dalam Toleransi';
-                $result['p'.$index]['value']= $color_pass*(strtotime($row) - strtotime($masuk))/60;
-                $total['Hadir']['Dalam Toleransi'] +=1;
-            }
-            elseif((strtotime($row) - strtotime($masuk)) / 60 > $tolerance)
-            {
-                $result['p'.$index]['status']='Terlambat';
-                $result['p'.$index]['value']= (strtotime($row) - strtotime($masuk))/60;
-                $result['p'.$index]['late']=1;
-                $total['Hadir']['Terlambat'] +=1;
-            }
-            $index +=1;
-        }
-        
-        return ["kehadiran"=>$result,"rekapitulasi"=>$total];
-    }
         
 }

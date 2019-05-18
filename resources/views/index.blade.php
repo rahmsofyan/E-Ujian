@@ -6,7 +6,8 @@
 
 @section('contents')
 
-<div class="bg-image my-20" style="background-image: url('assets/img/photos/informatika.png');">
+<div class="row">
+<div class="col bg-image my-20" style="background-image: url('assets/img/photos/informatika.png');">
     <div class="bg-black-op-75">
         <div class="content content-top content-full text-center">
             <div class="py-20">
@@ -16,9 +17,24 @@
         </div>
     </div>
 </div>
+</div>
 
 <div class="row gutters-tiny">
     <!-- Row #6 -->
+    @if(\Auth::check())
+    @if (is_null(\Auth::user()->getPIC())==false && \Auth::user()->getPIC()->exists())
+    <div class="col-md-6 col-xl-4">
+            <a class="block block-transparent" style="text-decoration: none;"  href="{{url('/myagenda')}}">
+                <div class="block-content block-content-full bg-success text-center">
+                    <div class="item item-2x item-circle bg-black-op-10 mx-auto mb-20">
+                        <i class="fa fa-user text-corporate-lighter"></i>
+                    </div>
+                    <div class="font-size-h3 font-w600 text-white">MyAgenda</div>
+                </div>
+            </a>
+        </div>
+    @endif
+    @endif
     <div class="col-md-6 col-xl-4">
         <a class="block block-transparent" style="text-decoration: none;"  href="{{url('/download')}}">
             <div class="block-content block-content-full bg-corporate text-center">

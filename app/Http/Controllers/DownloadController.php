@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Version;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\AgendabyPICController;
+use PDF;
+
 
 class DownloadController extends Controller
 {
@@ -102,6 +106,39 @@ class DownloadController extends Controller
      */
     public function destroy($id)
     {
-        //
+     
+    }
+
+    public function DownloadLaporan($idAgenda)
+    {   
+        $kehadiran = DB::table('kehadiranv2')
+                    ->join('users', 'kehadiranv2.idUser', '=', 'users.idUser')
+                    ->leftjoin('pic', 'kehadiranv2.idUser', '=', 'pic.idPIC')
+                    ->select('kehadiranv2.*', 'users.name')
+                    ->where('kehadiranv2.idAgenda', '=', $idAgenda)
+                    ->get();
+
+        $dosen = DB::table('agenda')
+                    ->join('pic', 'agenda.fk_idPIC', '=', 'pic.idPIC')
+                    ->select('pic.namaPIC', 'agenda.namaAgenda','agenda.WaktuMulai','agenda.idAgenda','agenda.toleransiKeterlambatan')
+                    ->where('agenda.idAgenda', '=', $idAgenda)
+                    ->get()->first();
+        
+        $tanggals = DB::table('absenKuliah')
+                    ->select('tglPertemuan')
+                    ->orderBy('tglPertemuan','asc')
+                    ->where('fk_idAgenda','=',$idAgenda)
+                    ->get();
+        
+        $StatusKehadiran = [] ;
+        $StatusKehadiran['Hadir'] = ['Tepat Waktu','Dalam Toleransi','Terlambat'];
+        $JmlPertemuan = count($tanggals);
+        $StatusKehadiran['Tidak Hadir'] =['Alpha','Tidak Ada Kelas','Izin'];
+        $Rekapitulasi = AgendabyPICController::RekapitulasiKehadiran($kehadiran,$tanggals,$dosen,$StatusKehadiran);
+        $FilterKehadiranMahasiswa = $Rekapitulasi['RekapitulasiMahasiswa'];
+        $Rekapitulasi = $Rekapitulasi['RekapitulasiTotal'];
+        
+        return view('Download.laporan', compact('Rekapitulasi','kehadiran','FilterKehadiranMahasiswa','JmlPertemuan', 'dosen', 'tanggals','StatusKehadiran'));
+        
     }
 }

@@ -1,3 +1,4 @@
+
 <table class="table table-bordered table-striped table-hover " id="tableagen" style="width:100%">
     <thead> 
         <tr> 
@@ -48,7 +49,7 @@
    </tbody>
 
     <tr>
-        <td colspan="20"></td>
+        <td colspan={{$jmlPertemuan+4}}></td>
     </tr>
     @foreach ($Rekapitulasi as $statushadir => $row)
         <tr> <td>#</td>
@@ -71,6 +72,11 @@
             let val = parseInt($( this ).attr('val')) +75;
             if(val>255)val=255;
             this.style.color = "rgb("+val+",200,75)";
-            console.log($(this).style);
+        });
+
+        $( ".late" ).each(function() {
+            let val = 255 - parseInt($( this ).attr('val'));
+            if(val<60)val=60;
+            this.style.color = "rgb(255,"+val+",50)";
         });
     </script>

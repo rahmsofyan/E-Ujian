@@ -27,7 +27,7 @@
           <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modal-interval">Toleransi Terlambat</button>
           <button type="button" class="btn btn-second" data-toggle="modal" data-target="#modal-Tidak Ada">Kelas Tidak Ada</button>
           <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-status">Opsi Status</button>
-          <a href="/laporan/kehadiran/{{$idAgenda}}"  target="_blank">
+          <a href="/laporanabsensi/{{$idAgenda}}"  target="_blank">
           <button form="button" class="btn btn-primary" ><li class="fa fa-print"></li>Print</button>
           </a>
           <button type="button" class="btn btn-grey" data-toggle="modal" data-target="#ModalLegenda">
@@ -97,7 +97,7 @@
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h3 class="modal-title">Set Untuk Tidak Ada Kelas</h3>@
+                            <h3 class="modal-title">Set Untuk Tidak Ada Kelas</h3>
                             <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                         </div>
                       <form id="set-interval"  method="POST" action="{{route('AgendaByPIC.UpdateJadwalKehadiran')}}" class="form-horizontal" enctype="multipart/form-data">
@@ -164,4 +164,26 @@
         </div>
       </div>
 </div>
+
+
+<script>
+        document.getElementById("print").addEventListener("click",function(){
+            var css = '@page { size: landscape; }',
+            head = document.head || document.getElementsByTagName('head')[0],
+            style = document.createElement('style');
+
+            style.type = 'text/css';
+            style.media = 'print';
+
+            if (style.styleSheet){
+              style.styleSheet.cssText = css;
+            } else {
+              style.appendChild(document.createTextNode(css));
+            }
+
+            head.appendChild(style);
+
+            window.print();
+        })
+      </script>
 @endsection

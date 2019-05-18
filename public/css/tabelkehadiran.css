@@ -1,4 +1,3 @@
-
 .icon-kehadiran
 {
     font-size: 25px;
@@ -30,5 +29,10 @@
 .late
 {
     font-size: 25px;
-    color:rgb(255,200,75) !important;
+}
+
+.intolerence_def
+{
+    font-size: 25px;
+    color:rgb(150,200,75) !important;
 }

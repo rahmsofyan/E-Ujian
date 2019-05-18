@@ -13,7 +13,7 @@
          <tbody>
          @foreach($kehadiran as $key => $row)
          <tr>
-           <form action="/absenKuliah/statuskehadiran" method="post">
+         <form action="{{route('AgendaByPIC.UpdateStatusKehadiran')}}" method="post">
             @csrf
            <td> {{ $key+1}}</td>
            <td name='nrp'> 
@@ -32,7 +32,7 @@
            <td>
               <select class="custom-select" name="status">
                 @foreach($statusKehadiran as $key => $status)
-              <option value="{{$status}}" {{($key==1)?"selected":""}} name="{{$status}}">{{$status}}</option>
+              <option value="{{$status}}" {{($key==1)?"selected":""}} name="status">{{$key}}</option>
                 @endforeach
               </select>
            </td>

@@ -4,11 +4,12 @@
             <th>No</th>
             <th><div style='width: 70px;' align="center">NRP</div></th>
             <th><div style='width: 170px;'>Nama</div></th>
-            <th><div style='width: 22px;'>N 1</div></th>
-            <th><div style='width: 22px;'>N 2</div></th>
-            <th><div style='width: 22px;'>N 3</div></th>
-            <th><div style='width: 22px;'>N 4</div></th>
-            <th><div style='width: 25px;'>N R</div></th>
+            <th><div style='width: 22px;'>Nilai 1</div></th>
+            <th><div style='width: 22px;'>Nilai 2</div></th>
+            <th><div style='width: 22px;'>Nilai 3</div></th>
+            <th><div style='width: 22px;'>Nilai 4</div></th>
+            <th><div style='width: 25px;'>Rata-Rata</div></th>
+            <th><div style='width: 25px;'>Nilai Akhir</div></th>
             <th>Action</th>
         </tr> 
     </thead>
@@ -27,6 +28,7 @@
                 <td>{{ (($m->nilai3) ? $m->nilai3 : '-') }}</td>
                 <td>{{ (($m->nilai4) ? $m->nilai4 : '-') }}</td>
                 <td>{{ (($m->nilai_rata) ? $m->nilai_rata : '-') }}</td>
+                <td>{{ array_sum([$m->nilai1,$m->nilai2,$m->nilai3,$m->nilai4]) }}</td>
                 <td><center>
                     <button class="btn btn-primary btn-sm modal-trigger tooltipped waves-effect modalclick"
                     data-id = "{{ $m->id}}"
