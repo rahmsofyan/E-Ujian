@@ -30,9 +30,12 @@
               </select>
            </td>
            <td>
+           
               <select class="custom-select" name="status">
-                @foreach($statusKehadiran as $key => $status)
-              <option value="{{$status}}" {{($key==1)?"selected":""}} name="status">{{$key}}</option>
+                 
+                @foreach($StatusKehadiran as $key => $status)
+
+              <option value="{{$status}}" {{($key==1)?"selected":""}} name="status">{{($key)}}</option>
                 @endforeach
               </select>
            </td>

@@ -125,12 +125,12 @@ class agendabyPICController extends Controller
                     ->where('fk_idAgenda','=',$idAgenda)
                     ->get();
         
-        $statusKehadiran = ['Izin'=>'Izin','Alpha'=>'Alpha','Hadir'=>'Tepat Waktu'];
+        $StatusKehadiran = ['Izin'=>'Izin','Alpha'=>'Alpha','Hadir'=>'Tepat Waktu'];
         $Rekapitulasi = $this->RekapitulasiKehadiran($kehadiran,$tanggals,$dosen,$this->StatusKehadiran);
         $FilterKehadiranMahasiswa = $Rekapitulasi['RekapitulasiMahasiswa'];
         $Rekapitulasi = $Rekapitulasi['RekapitulasiTotal'];
         
-        return view('myagenda.kehadiran.tampilKehadiran', compact('Rekapitulasi','kehadiran','FilterKehadiranMahasiswa', 'dosen', 'tanggals','statusKehadiran','idAgenda'));
+        return view('myagenda.kehadiran.tampilKehadiran', compact('Rekapitulasi','kehadiran','FilterKehadiranMahasiswa', 'dosen', 'tanggals','StatusKehadiran','idAgenda'));
     }
 
     public static function RekapitulasiKehadiran($Kehadiran,$TanggalPertemuan,$Agenda,$StatusKehadiran){
@@ -186,6 +186,13 @@ class agendabyPICController extends Controller
             ->orderBy('tglPertemuan','asc')
             ->where('fk_idAgenda','=',$idAgenda)
              ->get();
+        
+        $porsi = DB::table('portion')
+                ->select('porsi1','porsi2','porsi3','porsi4',)
+                ->where('fk_idAgenda','=',$idAgenda)
+                ->get();
+
+        $NilaiPorsi = [];
 
         $maxn1 =  DB::table('nilaimhs')->select('*')
                     ->where('idAgenda','=',$idAgenda)

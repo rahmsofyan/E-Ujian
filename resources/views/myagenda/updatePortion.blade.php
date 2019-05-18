@@ -22,46 +22,50 @@
     </div>
 
     <div class="panel-body border border-primary">
-     <form name="UpdatePorsi" class="form-horizontal" action="{{ route('AgendaByPICController.updatePorsi', @$agenda->idAgenda)}}" method="POST" onsubmit="return ValidatorPortion()>
+     <form name="UpdatePorsi" class="form-horizontal" action="{{ route('AgendaByPICController.updatePorsi',$agenda->idAgenda)}}" method="post" onsubmit="return ValidatorPortion()">
       @csrf
-       <div class="form-group">
-         <label class="control-label col-sm-2">Agenda</label>
-         <div class="col-sm-10">
-          <!-- <input type="text" class="form-control" id="fk_idAgenda" placeholder="Masukan idAgenda" name="fk_idAgenda"> -->
-         <input type="text" value="{{$agenda->namaAgenda}}" class="form-control" disabled="" name="">
-         </div>
-       </div>
+          <div class="form-group">
+            <label class="control-label col-sm-2">Agenda</label>
+            <div class="col-sm-10">
+              <!-- <input type="text" class="form-control" id="fk_idAgenda" placeholder="Masukan idAgenda" name="fk_idAgenda"> -->
+            <input type="text" value="{{$agenda->namaAgenda}}" class="form-control" disabled="" name="">
+            </div>
+          </div>
 
-  <div class="form-group">
-    <label class="col-sm-3 control-label ">Porsi Nilai 1</label>
-      <div class="col-sm-2"  id="porsi1-container">
-        <input type="text" value="{{@$portion->porsi1}}" class="form-control" name="porsi1" id="porsi1" >
+        <div class="form-group">
+          <label class="control-label col-sm-2 ">Presentase : </label>
+          <div class="col-sm-10"></div>
+        </div>
+      <div class="form-group">
+        <label class="col-sm-3 control-label ">Porsi Nilai 1</label>
+          <div class="col-sm-2"  id="porsi1-container">
+            <input type="number" value="{{$portion->porsi1}}" class="form-control" name="porsi1" id="porsi1" >
+          </div>
+
+        <label class="col-sm-3 control-label ">Porsi Nilai 3</label>
+          <div class="col-sm-2"  id="porsi3-container">
+            <input type="number" value="{{$portion->porsi2}}" class="form-control" name="porsi3" id="porsi3">
+          </div>
       </div>
 
-    <label class="col-sm-3 control-label ">Porsi Nilai 3</label>
-      <div class="col-sm-2"  id="porsi3-container">
-        <input type="text" value="{{@$portion->porsi2}}" class="form-control" name="porsi3" id="porsi3">
+      <div class="form-group">
+        <label class="col-sm-3 control-label ">Porsi Nilai 2</label>
+          <div class="col-sm-2"  id="porsi2-container">
+            <input type="number" value="{{$portion->porsi3}}" class="form-control" name="porsi2" id="porsi2">
+          </div>
+        
+        <label class="col-sm-3 control-label ">Porsi Nilai 4</label>
+          <div class="col-sm-2"  id="porsi4-container">
+            <input type="number" value="{{$portion->porsi4}}" class="form-control" name="porsi4" id="porsi4">
+          </div>
       </div>
-  </div>
-
-  <div class="form-group">
-    <label class="col-sm-3 control-label ">Porsi Nilai 2</label>
-      <div class="col-sm-2"  id="porsi2-container">
-        <input type="text" value="{{@$portion->porsi3}}" class="form-control" name="porsi2" id="porsi2">
-      </div>
-    
-    <label class="col-sm-3 control-label ">Porsi Nilai 4</label>
-      <div class="col-sm-2"  id="porsi4-container">
-        <input type="text" value="{{@$portion->porsi4}}" class="form-control" name="porsi4" id="porsi4">
-      </div>
-  </div>
 
 
-  <div class="form-group">        
-    <div class="col-sm-offset-2 col-sm-10" id="porsi5-container">
-      <button type="submit" class="btn btn-primary">Update</button>
-    </div>
-  </div>
+      <div class="form-group">        
+        <div class="col-sm-offset-2 col-sm-10" id="porsi5-container">
+          <button type="submit" class="btn btn-primary">Update</button>
+        </div>
+      </div>
 
       </form>
     </div>
