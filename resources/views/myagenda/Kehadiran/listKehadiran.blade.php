@@ -41,6 +41,7 @@
 			         	<a href="{{ route('AgendaByPIC.tampilKehadiran', $agenda->idAgenda) }}" class=" btn btn-info" style="margin: 5px">Lihat Absensi</a>
 						 <a href="{{ route('AgendaByPIC.tampilNilai', $agenda->idAgenda) }}" class=" btn btn-warning" style="margin: 5px">Penilaian</a>
 						 <a href="{{ route('AgendaByPIC.berita', $agenda->idAgenda) }}" class=" btn btn-primary" style="margin: 5px">Berita Acara</a>
+						 <a href="{{ route('AgendaByPICController.upPorsi', $agenda->idAgenda) }}" class=" btn btn-primary" style="margin: 5px">Update
 			         </td>			         
 			         </tr>
 			         @endforeach
