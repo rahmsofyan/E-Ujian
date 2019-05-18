@@ -1,4 +1,30 @@
--- convert dari tabel kehadiran v1 ke tabel kehadiran v2
+create table kehadiranv2
+(
+	id varchar(20),
+    idUser varchar(20),
+    idAgenda varchar(20),
+    p1 varchar(15),
+    p2 varchar(15),
+    p3 varchar(15),
+    p4 varchar(15),
+    p5 varchar(15),
+    p6 varchar(15),
+    p7 varchar(15),
+    p8 varchar(15),
+    p9 varchar(15),
+    p10 varchar(15),
+    p11 varchar(15),
+    p12 varchar(15),
+    p13 varchar(15),
+    p14 varchar(15),
+    p15 varchar(15),
+    p16 varchar(15),
+    p17 varchar(15),
+    p18 varchar(15),
+    p19 varchar(15),
+    p20 varchar(15),
+    primary key(id)
+) ENGINE = INNODB;
 
 insert into kehadiranv2 (id,idUser,idAgenda,p1,p2,p3,p4,p5,p6,p7,p8,p9,p10,p11,p12,p13,p14,p15,p16,p17,p18,p19,p20)
 select kehadiran.id,kehadiran.idUser,kehadiran.idAgenda,
@@ -24,11 +50,3 @@ if(kehadiran.p19=1,agenda.WaktuMulai,NULL)as p19,
 if(kehadiran.p20=1,agenda.WaktuMulai,NULL)as p20
 from kehadiran,agenda
 where kehadiran.idAgenda = agenda.idAgenda;
-
--- Default Nilai lama, nilai yang baru sudah pakai trigers
-insert into portion(fk_idAgenda,porsi1,porsi2,porsi3,porsi4)
-select idAgenda as fk_idAgenda,0,0,0,0
-from agenda;
-
-
---Kurang query untuk memasukan data userlama ke data nilai mahasiswa

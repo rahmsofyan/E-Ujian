@@ -28,7 +28,7 @@
                 <td>{{ (($m->nilai3) ? $m->nilai3 : '-') }}</td>
                 <td>{{ (($m->nilai4) ? $m->nilai4 : '-') }}</td>
                 <td>{{ (($m->nilai_rata) ? $m->nilai_rata : '-') }}</td>
-                <td>{{ array_sum([$m->nilai1,$m->nilai2,$m->nilai3,$m->nilai4]) }}</td>
+                <td>{{ array_sum([ ($m->nilai1*($porsi->porsi1)/100),($m->nilai2*($porsi->porsi2)/100),($m->nilai3*($porsi->porsi3)/100),($m->nilai4*($porsi->porsi4)/100)]) }}</td>
                 <td><center>
                     <button class="btn btn-primary btn-sm modal-trigger tooltipped waves-effect modalclick"
                     data-id = "{{ $m->id}}"

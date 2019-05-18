@@ -190,10 +190,8 @@ class agendabyPICController extends Controller
         $porsi = DB::table('portion')
                 ->select('porsi1','porsi2','porsi3','porsi4',)
                 ->where('fk_idAgenda','=',$idAgenda)
-                ->get();
-
-        $NilaiPorsi = [];
-
+                ->first();
+        
         $maxn1 =  DB::table('nilaimhs')->select('*')
                     ->where('idAgenda','=',$idAgenda)
                     ->max('nilai1');     
@@ -254,7 +252,7 @@ class agendabyPICController extends Controller
                     ->where('idAgenda','=',$idAgenda)
                     ->avg('nilai_rata');
 
-        return view('myagenda.penilaian.tampilPenilaian',compact('mhs','dosen','tanggals','maxn1','maxn2','maxn3','maxn4','maxnr','minn1','minn2','minn3','minn4','minnr','avgn1','avgn2','avgn3','avgn4','avgnr'));
+        return view('myagenda.penilaian.tampilPenilaian',compact('mhs','porsi','dosen','tanggals','maxn1','maxn2','maxn3','maxn4','maxnr','minn1','minn2','minn3','minn4','minnr','avgn1','avgn2','avgn3','avgn4','avgnr'));
     }
     
     public function updateNilai(Request $request)
