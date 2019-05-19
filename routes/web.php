@@ -14,6 +14,19 @@
 #Route::get('/', function () {
 #    return view('welcome');
 #});
+Route::get('backup', function () {
+    Artisan::call('backup:mysql-dump');
+
+    return view('backup');
+});
+
+Route::get('restore', function () {
+    return view('restore');
+});
+
+Route::post('restore', function () {
+    return view('restore');
+});
 
 Route::get('/', function () {
     return view('index');
