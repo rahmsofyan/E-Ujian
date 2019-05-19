@@ -47,10 +47,16 @@
                                 <a style="text-decoration: none;" href="{{route('absenKuliah')}}"><i class="fa fa-check"></i>Absen Kuliah</a>
                             </li>
                             
-                            @if(\Auth::check())
+                             @if(\Auth::check())
                             @if (is_null(\Auth::user()->getPIC())==false && \Auth::user()->getPIC()->exists())
                             <li>
                                 <a style="text-decoration: none;" href="{{route('AgendaByPIC')}}"><i class="fa fa-user"></i>My Agenda</a>
+                            </li>
+                            <li>
+                                <a style="text-decoration: none;" href="{{route('backup')}}"><i class="fa fa-user"></i>Backup</a>
+                            </li>
+                            <li>
+                                <a style="text-decoration: none;" href="{{route('restore')}}"><i class="fa fa-user"></i>Restore</a>
                             </li>
                             @endif
                             @endif
