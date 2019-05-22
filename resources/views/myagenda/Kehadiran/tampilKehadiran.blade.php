@@ -97,7 +97,7 @@
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h3 class="modal-title">Set Untuk Tidak Ada Kelas</h3>@
+                            <h3 class="modal-title">Set Untuk Tidak Ada Kelas</h3>
                             <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                         </div>
                       <form id="set-interval"  method="POST" action="{{route('AgendaByPIC.UpdateJadwalKehadiran')}}" class="form-horizontal" enctype="multipart/form-data">

@@ -129,7 +129,8 @@ class agendabyPICController extends Controller
         $Rekapitulasi = $this->RekapitulasiKehadiran($kehadiran,$tanggals,$dosen,$this->StatusKehadiran);
         $FilterKehadiranMahasiswa = $Rekapitulasi['RekapitulasiMahasiswa'];
         $Rekapitulasi = $Rekapitulasi['RekapitulasiTotal'];
-        
+
+
         return view('myagenda.kehadiran.tampilKehadiran', compact('Rekapitulasi','kehadiran','FilterKehadiranMahasiswa', 'dosen', 'tanggals','StatusKehadiran','idAgenda'));
     }
 
@@ -287,8 +288,7 @@ class agendabyPICController extends Controller
 
     public function UpdateJadwalKehadiran(Request $request)
     {
-        kehadiran::where('idAgenda','=',$request->idAgenda)
-                    ->update([$request->p=>'special']);
+        kehadiran::where('idAgenda','=',$request->idAgenda)->update([$request->p=>'Tidak Ada Kelas']);
         return redirect()->back();
     }
     
@@ -321,7 +321,7 @@ class agendabyPICController extends Controller
                 $result['p'.$index]['value']=0;
                 $total['Tidak Hadir']['Alpha'] +=1;
             }
-            elseif (strtolower($row)=='tidak ada kelas' || $row==null){
+            elseif (strtolower($row)=='tidak ada kelas' || $row==null || strtolower($row)=='special'){
                 $result['p'.$index]['status']='Tidak Ada Kelas';
                 $result['p'.$index]['value']=0;
 

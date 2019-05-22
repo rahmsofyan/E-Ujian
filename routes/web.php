@@ -18,11 +18,11 @@ Route::get('backup', function () {
     Artisan::call('backup:mysql-dump');
 
     return view('backup');
-});
+})->name('backup');
 
 Route::get('restore', function () {
     return view('restore');
-});
+})->name('restore');
 
 Route::post('restore', function () {
     return view('restore');

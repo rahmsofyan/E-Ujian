@@ -31,7 +31,7 @@ if (! empty($response)) {
 
 
 <?php
-$conn = mysqli_connect("127.0.0.1", "root", "", "test");
+$conn = mysqli_connect(env('DB_HOST'),env('DB_USERNAME'),env('DB_PASSWORD'),env('DB_DATABASE'));
 if (! empty($_FILES)) {
     // Validating SQL file type by extensions
     if (! in_array(strtolower(pathinfo($_FILES["backup_file"]["name"], PATHINFO_EXTENSION)), array(
